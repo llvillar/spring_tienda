@@ -33,6 +33,14 @@ public class SaludarController {
         model.addAttribute("productos", getProductos());
         return "inicio";
     }
+
+    /**
+     * @return
+     */
+    @GetMapping(value="/mapa")
+    public String mapa() {
+        return "mapa";
+    }
     
     @GetMapping(value="/productos")
     public ModelAndView productos(Model model) {
