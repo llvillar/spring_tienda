@@ -34,8 +34,16 @@ public class SaludarController {
         return "inicio";
     }
 
-    @GetMapping(value = "/productos")
-    public ModelAndView productos() {
+    /**
+     * @return
+     */
+    @GetMapping(value="/mapa")
+    public String mapa() {
+        return "mapa";
+    }
+    
+    @GetMapping(value="/productos")
+    public ModelAndView productos(Model model) {
         ModelAndView modelAndView = new ModelAndView(Views.INICIO);
         modelAndView.addObject("productos", getProductos());
         return modelAndView;
