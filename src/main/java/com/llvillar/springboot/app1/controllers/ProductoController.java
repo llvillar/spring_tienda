@@ -28,13 +28,18 @@ public class ProductoController {
     public ModelAndView edit(
             @RequestParam(name = "codigo", required = true) int codigo) {
 
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("producto", getProducto(codigo));
+        modelAndView.setViewName("productos/edit");
+        return modelAndView;
+    }
+
+    private Producto getProducto(int codigo){
         List<Producto> productos = getProductos();
         int indexOf = productos.indexOf(new Producto(codigo));
 
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("producto", productos.get(indexOf));
-        modelAndView.setViewName("productos/edit");
-        return modelAndView;
+        return productos.get(indexOf);
+
     }
 
     private List<Producto> getProductos() {
