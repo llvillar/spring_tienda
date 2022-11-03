@@ -23,8 +23,7 @@
         
         <div class="col-8">
           <h4 class="mb-3">Datos Cliente</h4>
-          <form class="needs-validation"  method="post" th:action="@{/clientes/update}"  novalidate>
-              <input type="hidden" name="codigo" th:value="${cliente.codigo}">
+          <form class="needs-validation"  method="post" th:action="@{/clientes/save}"  novalidate>
             <div class="row g-4">
               <div class="col-sm-6">
                 <label for="nombre" class="form-label">Nombre</label>
@@ -84,7 +83,7 @@
             <div class="col-sm-12">
               <div class="btn-group">
                 <a class="btn btn-primary" th:href="@{/clientes/list}" href="#" role="button">Cancelar</a>
-                <button class="btn btn-primary" type="submit">Actualizar</button>
+                <button class="btn btn-primary" type="submit">Crear</button>
               </div>
             </div>
 
