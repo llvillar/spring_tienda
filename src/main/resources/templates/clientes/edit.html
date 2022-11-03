@@ -23,7 +23,8 @@
         
         <div class="col-8">
           <h4 class="mb-3">Datos Cliente</h4>
-          <form class="needs-validation"  method="post" th:action="@{/clientes/add}" novalidate>
+          <form class="needs-validation"  method="post" th:action="@{/clientes/update}"  novalidate>
+              <input type="hidden" name="codigo" th:value="${cliente.codigo}">
             <div class="row g-4">
               <div class="col-sm-6">
                 <label for="nombre" class="form-label">Nombre</label>
