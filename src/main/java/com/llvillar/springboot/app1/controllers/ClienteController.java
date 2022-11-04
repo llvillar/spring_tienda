@@ -59,7 +59,7 @@ public class ClienteController {
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("clientes", clientes);
-        modelAndView.setViewName("redirect:list");
+        modelAndView.setViewName("clientes/list");
         return modelAndView;
     }
 
@@ -74,7 +74,7 @@ public class ClienteController {
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("clientes", clientes);
-        modelAndView.setViewName("redirect:/list");
+        modelAndView.setViewName("clientes/list");
         return modelAndView;
     }
 
@@ -86,7 +86,7 @@ public class ClienteController {
         clientes.remove(getCliente(codigo));
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("clientes", clientes);
-        modelAndView.setViewName("redirect:/list");
+        modelAndView.setViewName("clientes/list");
         return modelAndView;
     }
         
