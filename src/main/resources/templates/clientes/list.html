@@ -13,7 +13,7 @@
 
     <div class="row">
         <div class="col-lg-3">
-            <a th:href="@{/clientes/create}" class="btn btn-primary btn-sm mb-3">Nuevo cliente</a>
+            <a th:href="@{/clientes/create}" class="btn btn-primary btn-sm mb-3" th:text="#{cliente.boton.nuevo}">Nuevo cliente</a>
         </div>
     </div>
 
@@ -22,14 +22,14 @@
         <caption th:text="#{clientes.listado.titulo}">Lista de clientes</caption>
         <thead>
           <tr>
-            <th scope="col">Código</th>
-            <th scope="col">Nombre</th>
-            <th scope="col">Apellidos</th>
-            <th scope="col">Email</th>
-            <th scope="col">DNI</th>
-            <th scope="col">Teléfono</th>
-            <th scope="col">Dirección</th>
-            <th scope="col">VIP</th>
+            <th scope="col" th:text="#{cliente.codigo}">Código</th>
+            <th scope="col" th:text="#{cliente.nombre}">Nombre</th>
+            <th scope="col" th:text="#{cliente.apellidos}">Apellidos</th>
+            <th scope="col" th:text="#{cliente.email}">Email</th>
+            <th scope="col" th:text="#{cliente.dni}">DNI</th>
+            <th scope="col" th:text="#{cliente.telefono}">Teléfono</th>
+            <th scope="col" th:text="#{cliente.direccion}">Dirección</th>
+            <th scope="col" th:text="#{cliente.vip}">VIP</th>
             <th scope="col"></th>
           </tr>
         </thead>
