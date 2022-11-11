@@ -26,7 +26,7 @@ public class ConfiguracionMensajes implements WebMvcConfigurer {
     @Bean
     public LocaleResolver localeResolver() {
         SessionLocaleResolver sessionLocaleResolver = new SessionLocaleResolver();
-        sessionLocaleResolver.setDefaultLocale(new Locale("en"));
+        sessionLocaleResolver.setDefaultLocale(new Locale("es"));
         return sessionLocaleResolver;
     }
 
