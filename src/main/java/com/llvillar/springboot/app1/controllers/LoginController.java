@@ -17,7 +17,9 @@ import com.llvillar.springboot.app1.model.Usuario;
 @RequestMapping("/login")
 public class LoginController {
 
-    
+    @Autowired
+    private MessageSource messageSource;
+
     @GetMapping(value = {"/signin"})
     public String signin(){
         return "signin";
@@ -27,12 +29,20 @@ public class LoginController {
     public String login(Model model, Usuario usuario){
 
 
-        model.addAttribute("greetings", "¡Bienvenido, " + usuario.getName() + "!");
+        String greetings = messageSource.getMessage("saludar.usuario",new String[]{usuario.getName()}, LocaleContextHolder.getLocale());
+
+//        model.addAttribute("greetings", "¡Bienvenido, " + usuario.getName() + "!");
+        model.addAttribute("greetings", greetings);
         return "welcome";
     }
 
     @GetMapping(value = {"/logout"})
     public String logout(){
         return "signin";
+    }
+
+    @GetMapping(value = {"/welcome"})
+    public String welcome(){
+        return "welcome";
     }
 }
