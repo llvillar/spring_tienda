@@ -1,5 +1,7 @@
 package com.llvillar.springboot.app1.controllers;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -8,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.llvillar.springboot.app1.model.Usuario;
 
@@ -24,23 +27,31 @@ public class LoginController {
     }
 
     @PostMapping(value = "/login")
-    public String login(Model model, Usuario usuario){
+    public String login(Model model, Usuario usuario, HttpSession session){
 
 
         String greetings = messageSource.getMessage("saludar.usuario",new String[]{usuario.getName()}, LocaleContextHolder.getLocale());
 
 //        model.addAttribute("greetings", "¡Bienvenido, " + usuario.getName() + "!");
         model.addAttribute("greetings", greetings);
+        String id = session.getId();
+        model.addAttribute("sessionid", session.getId());
+        session.setAttribute("usuario", usuario);
         return "welcome";
     }
 
     @GetMapping(value = {"/logout"})
-    public String logout(){
+    public String logout(HttpSession session){
+    
+        session.invalidate();
         return "signin";
     }
 
     @GetMapping(value = {"/welcome"})
-    public String welcome(){
+    public String welcome(Model model, HttpSession session){
+
+        model.addAttribute("sessionid", session.getId());
+
         return "welcome";
     }
 }

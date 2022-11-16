@@ -26,6 +26,14 @@
             </div>
         </div>
     </div>
+
+
+
+    <span th:text="${session.usuario.name}" th:if="${session ne null and session.usuario ne null}"></span>
+    <span th:text="#{no.session}" th:unless="${session ne null and session.usuario ne null}"></span>
+
+    <h4 th:text="${sessionid}"></h4>
+
     <div th:replace="commons/footer :: footer" class="container">Footer</div>
 
 </body>
