@@ -10,7 +10,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.llvillar.springboot.app1.model.Usuario;
 
@@ -21,37 +20,31 @@ public class LoginController {
     @Autowired
     private MessageSource messageSource;
 
-    @GetMapping(value = {"/signin"})
-    public String signin(){
+    @GetMapping(value = { "/signin" })
+    public String signin() {
         return "signin";
     }
 
     @PostMapping(value = "/login")
-    public String login(Model model, Usuario usuario, HttpSession session){
+    public String login(Model model, Usuario usuario, HttpSession session) {
 
+        String greetings = messageSource.getMessage("saludar.usuario", new String[] { usuario.getName() },
+                LocaleContextHolder.getLocale());
 
-        String greetings = messageSource.getMessage("saludar.usuario",new String[]{usuario.getName()}, LocaleContextHolder.getLocale());
-
-//        model.addAttribute("greetings", "¡Bienvenido, " + usuario.getName() + "!");
         model.addAttribute("greetings", greetings);
-        String id = session.getId();
-        model.addAttribute("sessionid", session.getId());
         session.setAttribute("usuario", usuario);
         return "welcome";
     }
 
-    @GetMapping(value = {"/logout"})
-    public String logout(HttpSession session){
-    
+    @GetMapping(value = { "/logout" })
+    public String logout(HttpSession session) {
+
         session.invalidate();
         return "signin";
     }
 
-    @GetMapping(value = {"/welcome"})
-    public String welcome(Model model, HttpSession session){
-
-        model.addAttribute("sessionid", session.getId());
-
+    @GetMapping(value = { "/welcome" })
+    public String welcome(Model model, HttpSession session) {
         return "welcome";
     }
 }

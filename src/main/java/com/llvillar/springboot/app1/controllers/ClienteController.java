@@ -99,9 +99,6 @@ public class ClienteController {
 
     private List<Cliente> getClientes() {
 
-        // List<Cliente> clientes = (List<Cliente>) request.getSession().getAttribute("clientes");
-
-        // if (clientes == null) {
             List<Cliente> clientes = new ArrayList<>();
 
             clientes.add(new Cliente(1, "Antonio", "Molina", "your@gmail.com","12345678Z", "555 777 8987","C/Melancolia, 12,1C", false));
@@ -109,11 +106,6 @@ public class ClienteController {
             clientes.add(new Cliente(3, "Lorenzo", "Lamas", "your@gmail.com", "12345678Z", "555 777 8987","C/Melancolia, 12,1C", false));
             clientes.add(new Cliente(4, "Andrés", "Segovia", "your@gmail.com", "12345678Z", "555 777 8987","C/Melancolia, 12,1C", false));
     
-            // request.getSession().setAttribute("clientes", clientes);
-        // }
-
         return clientes;
-
     }
-
 }
