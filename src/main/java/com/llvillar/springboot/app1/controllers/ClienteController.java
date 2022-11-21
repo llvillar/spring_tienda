@@ -1,8 +1,8 @@
 package com.llvillar.springboot.app1.controllers;
 
-import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,26 +12,34 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.llvillar.springboot.app1.model.Cliente;
+import com.llvillar.springboot.app1.services.ClientesService;
 
 @Controller
 @RequestMapping("/clientes")
 public class ClienteController {
 
+    @Autowired
+    ClientesService clientesService;
+
     @GetMapping(value="/list")
     public ModelAndView list(Model model) {
 
+        List<Cliente> clientes = clientesService.findAll();
+
         ModelAndView modelAndView = new ModelAndView("clientes/list");
-        modelAndView.addObject("clientes", getClientes());
+        modelAndView.addObject("clientes", clientes);
         modelAndView.addObject("title", "clientes");
         return modelAndView;
     }
-
+    
     @GetMapping(path = { "/edit/{codigo}" })
     public ModelAndView edit(
             @PathVariable(name = "codigo", required = true) int codigo) {
 
+        Cliente cliente = clientesService.find(codigo);
+
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("cliente", getCliente(codigo));
+        modelAndView.addObject("cliente", cliente);
         modelAndView.setViewName("clientes/edit");
         return modelAndView;
     }
@@ -48,12 +56,9 @@ public class ClienteController {
     @PostMapping(path = { "/save" })
     public ModelAndView save(Cliente cliente) {
 
-        int round = (int) (Math.random()*(100+5));
+        clientesService.save(cliente);
 
-        cliente.setCodigo(round);
-
-        List<Cliente> clientes = getClientes();
-        clientes.add(cliente);
+        List<Cliente> clientes = clientesService.findAll();
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("clientes", clientes);
@@ -64,11 +69,10 @@ public class ClienteController {
     @PostMapping(path = { "/update" })
     public ModelAndView update(Cliente cliente) {
 
-        List<Cliente> clientes = getClientes();
 
-        int indexOf = clientes.indexOf(cliente);
+        clientesService.update(cliente);
 
-        clientes.set(indexOf, cliente);
+        List<Cliente> clientes = clientesService.findAll();
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("clientes", clientes);
@@ -80,32 +84,13 @@ public class ClienteController {
     public ModelAndView delete(
             @PathVariable(name = "codigo", required = true) int codigo) {
 
-        List<Cliente> clientes = getClientes();
-        clientes.remove(getCliente(codigo));
+
+        clientesService.delete(codigo);
+        List<Cliente> clientes = clientesService.findAll();
+
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("clientes", clientes);
         modelAndView.setViewName("clientes/list");
         return modelAndView;
-    }
-        
-
-    private Cliente getCliente(int codigo){
-        List<Cliente> clientes = getClientes();
-        int indexOf = clientes.indexOf(new Cliente(codigo));
-
-        return clientes.get(indexOf);
-
-    }
-
-    private List<Cliente> getClientes() {
-
-            List<Cliente> clientes = new ArrayList<>();
-
-            clientes.add(new Cliente(1, "Antonio", "Molina", "your@gmail.com","12345678Z", "555 777 8987","C/Melancolia, 12,1C", false));
-            clientes.add(new Cliente(2, "Maria", "Zambrano", null, "12345678Z", "555 777 8987","C/Melancolia, 12,1C", true));
-            clientes.add(new Cliente(3, "Lorenzo", "Lamas", "your@gmail.com", "12345678Z", "555 777 8987","C/Melancolia, 12,1C", false));
-            clientes.add(new Cliente(4, "Andrés", "Segovia", "your@gmail.com", "12345678Z", "555 777 8987","C/Melancolia, 12,1C", false));
-    
-        return clientes;
     }
 }
