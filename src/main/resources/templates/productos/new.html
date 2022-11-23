@@ -22,68 +22,46 @@
       <div class="row g-5">
         
         <div class="col-8">
-          <h4 class="mb-3" th:text="#{cliente.edicion.titulo}">Datos Produco</h4>
-          <form class="needs-validation"  method="post" th:action="@{/clientes/save}"  novalidate>
+          <h4 class="mb-3" th:text="#{producto.edicion.titulo}">Datos Producto</h4>
+          <form class="needs-validation"  method="post" th:action="@{/productos/save}"  novalidate>
             <div class="row g-4">
               <div class="col-sm-6">
-                <label for="nombre" class="form-label" th:text="#{cliente.nombre}">Nombre</label>
-                <input type="text" class="form-control" id="nombre" name="nombre" placeholder="" th:value="${cliente.nombre}" value="" required>
+                <label for="nombre" class="form-label" th:text="#{producto.nombre}">Nombre</label>
+                <input type="text" class="form-control" id="nombre" name="nombre" placeholder="" th:value="${producto.nombre}" value="" required>
                 <div class="invalid-feedback">
                   Nombre requerido.
                 </div>
               </div>
   
               <div class="col-sm-6">
-                <label for="lastName" class="form-label"  th:text="#{cliente.apellidos}">Apellidos</label>
-                <input type="text" class="form-control" id="apellidos" name="apellidos" placeholder="" th:value="${cliente.apellidos}" value="" required>
+                <label for="lastName" class="form-label"  th:text="#{producto.descripcion}">Descripcion</label>
+                <input type="text" class="form-control" id="descripcion" name="descripcion" placeholder="" th:value="${producto.descripcion}" value="" required>
                 <div class="invalid-feedback">
                   Apellidos requeridos.
                 </div>
               </div>
 
               <div class="col-sm-6">
-                <label for="dni" class="form-label"  th:text="#{cliente.dni}">DNI</label>
-                <input type="text" class="form-control" id="dni" name="dni" placeholder="" th:value="${cliente.dni}" value="" required>
+                <label for="dni" class="form-label"  th:text="#{producto.precio}">Precio</label>
+                <input type="text" class="form-control" id="precio" name="precio" placeholder="" th:value="${producto.precio}" value="" required>
                 <div class="invalid-feedback">
                   Dni requerido.
                 </div>
-              </div>
 
-              <div class="col-sm-6">
-                <label for="telefono" class="form-label"  th:text="#{cliente.telefono}">Teléfono <span class="text-muted">(Opcional)</span></label>
-                <input type="text" class="form-control" id="telefono" name="telefono" placeholder="" th:value="${cliente.telefono}" value="">
-              </div>
-
-              <div class="col-sm-12">
-                <label for="address" class="form-label" th:text="#{cliente.direccion}">Address</label>
-                <input type="text" class="form-control" id="address" name="direccion" th:value="${cliente.direccion}" placeholder="1234 Main St" required>
-                <div class="invalid-feedback">
-                  Please enter your shipping address.
+                <div class="mb-3">
+                  <label for="formFile" class="form-label">Default file input example</label>
+                  <input class="form-control" type="file" id="formFile">
                 </div>
               </div>
 
-              <div class="col-sm-12">
-                <label for="email" class="form-label" th:text="#{cliente.email}">Email <span class="text-muted">(Opcional)</span></label>
-                <input type="email" class="form-control" id="email" name="email" th:value="${cliente.email}" placeholder="you@example.com">
-                <div class="invalid-feedback">
-                  Please enter a valid email address for shipping updates.
-                </div>
-              </div>
-
-              <div class="col-sm-12">
-                <div class="form-check">
-                  <input type="checkbox" class="form-check-input" id="vip" name="vip" th:checked="${cliente.vip}">
-                  <label class="form-check-label" for="vip"  th:text="#{cliente.vip}">Es cliente VIP</label>
-                </div>
-              </div>
             </div>
   
             <hr class="my-4">
   
             <div class="col-sm-12">
               <div class="btn-group">
-                <a class="btn btn-primary" th:href="@{/clientes/list}" href="#" role="button">Cancelar</a>
-                <button class="btn btn-primary" type="submit">Crear</button>
+                <a class="btn btn-primary" th:href="@{/productos/list}" href="#" role="button" th:text="#{boton.cancelar}">Cancelar</a>
+                <button class="btn btn-primary" type="submit" th:text="#{boton.crear}">Crear</button>
               </div>
             </div>
 
