@@ -29,7 +29,7 @@
       <div th:each="producto : ${productos}" class="col-3">
           <!-- card-->
           <div class="card" style="width: 18rem;">
-            <img th:src="@{${producto.urlImg}}" src="../static/img/cocacola.jpg" class="card-img-top" alt="...">
+            <!-- <img th:src="@{${producto.urlImg}}" src="../static/img/cocacola.jpg" class="card-img-top" alt="..."> -->
             <div class="card-body">
               <h5 th:text="${producto.nombre}" class="card-title">Card title</h5>
               <h7 th:text="${producto.precio}" class="card-text">Card title</h7>

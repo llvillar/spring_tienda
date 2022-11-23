@@ -4,7 +4,6 @@ public class Producto {
     private int codigo;
     private String nombre;
     private String descripcion;
-    private String urlImg;
     private float precio;
 
     public Producto() {
@@ -15,11 +14,10 @@ public class Producto {
         this.codigo = codigo;
     }
 
-    public Producto(int codigo, String nombre, String descripcion, String urlImg, float precio) {
+    public Producto(int codigo, String nombre, String descripcion, float precio) {
         this.codigo = codigo;
         this.nombre = nombre;
         this.descripcion = descripcion;
-        this.urlImg = urlImg;
         this.precio = precio;
     }
 
@@ -63,20 +61,6 @@ public class Producto {
      */
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
-    }
-
-    /**
-     * @return String return the urlImg
-     */
-    public String getUrlImg() {
-        return urlImg;
-    }
-
-    /**
-     * @param urlImg the urlImg to set
-     */
-    public void setUrlImg(String urlImg) {
-        this.urlImg = urlImg;
     }
 
 
