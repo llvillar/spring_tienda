@@ -45,7 +45,7 @@ public class ClientesDAOImpl extends JdbcDaoSupport implements ClientesDAO{
         Object params [] = {codigo};
         int types [] = {Types.INTEGER};
 
-        Cliente cliente = (Cliente) getJdbcTemplate().queryForObject(query, params, types, new BeanPropertyRowMapper(Cliente.class));
+        Cliente cliente = (Cliente) getJdbcTemplate().queryForObject(query, params, types, new ClienteMapper());
 
         return cliente;
     }

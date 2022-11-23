@@ -1,13 +1,11 @@
 package com.llvillar.springboot.app1.model;
 
-import java.util.Date;
-
 public class Producto {
     private int codigo;
     private String nombre;
     private String descripcion;
     private String urlImg;
-    private Date fecha;
+    private float precio;
 
     public Producto() {
     }
@@ -17,12 +15,12 @@ public class Producto {
         this.codigo = codigo;
     }
 
-    public Producto(int codigo, String nombre, String descripcion, String urlImg, Date fecha) {
+    public Producto(int codigo, String nombre, String descripcion, String urlImg, float precio) {
         this.codigo = codigo;
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.urlImg = urlImg;
-        this.fecha = fecha;
+        this.precio = precio;
     }
 
     /**
@@ -81,19 +79,16 @@ public class Producto {
         this.urlImg = urlImg;
     }
 
-    /**
-     * @return Date return the fecha
-     */
-    public Date getFecha() {
-        return fecha;
+
+    public float getPrecio() {
+        return precio;
     }
 
-    /**
-     * @param fecha the fecha to set
-     */
-    public void setFecha(Date fecha) {
-        this.fecha = fecha;
+
+    public void setPrecio(float precio) {
+        this.precio = precio;
     }
+
     
     @Override
     public int hashCode() {
@@ -116,4 +111,6 @@ public class Producto {
             return false;
         return true;
     }
+
+
 }
