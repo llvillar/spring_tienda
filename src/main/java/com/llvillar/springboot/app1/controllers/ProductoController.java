@@ -1,5 +1,6 @@
 package com.llvillar.springboot.app1.controllers;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,10 +10,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.llvillar.springboot.app1.model.Producto;
 import com.llvillar.springboot.app1.services.ProductosService;
+import com.llvillar.springboot.app1.utils.ImageUtil;
 
 @Controller
 @RequestMapping("/productos")
@@ -25,10 +29,14 @@ public class ProductoController {
     public ModelAndView list(Model model) {
 
 
+        
         List<Producto> productos = productosService.findAll();
 
         ModelAndView modelAndView = new ModelAndView("productos/list");
         modelAndView.addObject("productos", productos);
+
+        
+        modelAndView.addObject("imgUtil", new ImageUtil());
         return modelAndView;
     }
 
@@ -55,7 +63,11 @@ public class ProductoController {
     }
 
     @PostMapping(path = { "/save" })
-    public ModelAndView save(Producto producto) {
+    public ModelAndView save(Producto producto, @RequestParam("imageForm") MultipartFile multipartFile) throws IOException {
+
+        byte[] image = multipartFile.getBytes();
+
+        producto.setImage(image);
 
         productosService.save(producto);
 
@@ -68,16 +80,16 @@ public class ProductoController {
     }
 
     @PostMapping(path = { "/update" })
-    public ModelAndView update(Producto producto) {
+    public ModelAndView update(Producto producto, @RequestParam("imageForm") MultipartFile multipartFile) throws IOException {
 
+        byte[] image = multipartFile.getBytes();
+
+        producto.setImage(image);
 
         productosService.update(producto);
 
-        List<Producto> productos = productosService.findAll();
-
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("productos", productos);
-        modelAndView.setViewName("productos/list");
+        modelAndView.setViewName("redirect:edit/" + producto.getCodigo());
         return modelAndView;
     }
 

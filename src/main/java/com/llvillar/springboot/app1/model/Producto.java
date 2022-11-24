@@ -1,15 +1,17 @@
 package com.llvillar.springboot.app1.model;
 
+import com.llvillar.springboot.app1.utils.ImageUtil;
+
 public class Producto {
     private int codigo;
     private String nombre;
     private String descripcion;
     private float precio;
+    private byte[] image;
 
     public Producto() {
     }
 
-    
     public Producto(int codigo) {
         this.codigo = codigo;
     }
@@ -27,14 +29,14 @@ public class Producto {
     public int getCodigo() {
         return codigo;
     }
-    
+
     /**
      * @param codigo the codigo to set
      */
     public void setCodigo(int codigo) {
         this.codigo = codigo;
     }
-    
+
     /**
      * @return String return the nombre
      */
@@ -63,17 +65,26 @@ public class Producto {
         this.descripcion = descripcion;
     }
 
-
     public float getPrecio() {
         return precio;
     }
-
 
     public void setPrecio(float precio) {
         this.precio = precio;
     }
 
-    
+    public void setImage(byte[] image) {
+        this.image = image;
+    }
+
+    public byte[] getImage() {
+        return image;
+    }
+
+    public String getImageView(){
+       return ImageUtil.getImgData(this.image);
+    }
+
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -81,7 +92,7 @@ public class Producto {
         result = prime * result + codigo;
         return result;
     }
-    
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj)
@@ -95,6 +106,5 @@ public class Producto {
             return false;
         return true;
     }
-
 
 }

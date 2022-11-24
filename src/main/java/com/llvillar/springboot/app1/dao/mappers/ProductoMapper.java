@@ -19,6 +19,7 @@ public class ProductoMapper implements RowMapper<Producto>{
         producto.setNombre(rs.getString("nombre"));
         producto.setDescripcion(rs.getString("descripcion"));
         producto.setPrecio(rs.getFloat("precio"));
+        producto.setImage(rs.getBytes("image"));
 
         return producto;
     }   
