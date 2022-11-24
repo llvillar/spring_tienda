@@ -1,5 +1,6 @@
 package com.llvillar.springboot.app1.dao.impl;
 
+import java.sql.PreparedStatement;
 import java.sql.Types;
 import java.util.List;
 
@@ -8,7 +9,10 @@ import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import com.llvillar.springboot.app1.dao.ProductosDAO;
@@ -52,6 +56,8 @@ public class ProductosDAOImpl extends JdbcDaoSupport implements ProductosDAO{
 
     @Override
     public void insert(Producto producto) {
+
+        
         
         String query = "insert into Productos (nombre," + 
                                             " descripcion," + 
@@ -73,6 +79,22 @@ public class ProductosDAOImpl extends JdbcDaoSupport implements ProductosDAO{
         };
         
         int update = getJdbcTemplate().update(query, params, types);
+        
+        PreparedStatement ps = getConnection().prepareStatement(query, params);
+        KeyHolder KeyHolder;
+
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+
+        getJdbcTemplate().update(connection -> {
+            PreparedStatement ps = connection
+              .prepareStatement(INSERT_MESSAGE_SQL);
+              ps.setString(1, message);
+              return ps;
+            }, keyHolder);
+    
+            return (long) keyHolder.getKey();
+            
+        getJdbcTemplate().update(psc, KeyHolder);
         
     }
 

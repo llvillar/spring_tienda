@@ -36,6 +36,20 @@ public class LoginController {
         return "welcome";
     }
 
+    @GetMapping(value = "/login")
+    public String loginGet(Model model, Usuario usuario, HttpSession session) {
+
+        usuario = new Usuario();
+        usuario.setName("llvillar");
+
+        String greetings = messageSource.getMessage("saludar.usuario", new String[] { usuario.getName() },
+                LocaleContextHolder.getLocale());
+
+        model.addAttribute("greetings", greetings);
+        session.setAttribute("usuario", usuario);
+        return "welcome";
+    }
+
     @GetMapping(value = { "/logout" })
     public String logout(HttpSession session) {
 
