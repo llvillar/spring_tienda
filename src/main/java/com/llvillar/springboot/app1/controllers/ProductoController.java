@@ -71,11 +71,11 @@ public class ProductoController {
 
         productosService.save(producto);
 
-        List<Producto> productos = productosService.findAll();
+        // List<Producto> productos = productosService.findAll();
 
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("productos", productos);
-        modelAndView.setViewName("productos/list");
+        // modelAndView.addObject("productos", productos);
+        modelAndView.setViewName("redirect:edit/" + producto.getCodigo());
         return modelAndView;
     }
 

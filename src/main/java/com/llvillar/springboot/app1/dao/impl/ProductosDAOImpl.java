@@ -1,6 +1,12 @@
 package com.llvillar.springboot.app1.dao.impl;
 
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+import java.sql.Blob;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.sql.Types;
 import java.util.List;
 
@@ -57,46 +63,48 @@ public class ProductosDAOImpl extends JdbcDaoSupport implements ProductosDAO{
     @Override
     public void insert(Producto producto) {
 
-        
-        
         String query = "insert into Productos (nombre," + 
                                             " descripcion," + 
                                             " precio," + 
                                             " image)" + 
                                             " values (?, ?, ?, ?)";
-        Object[] params = {
-            producto.getNombre(),
-            producto.getDescripcion(),
-            producto.getPrecio(),
-            producto.getImage()
-        };
+        // Object[] params = {
+        //     producto.getNombre(),
+        //     producto.getDescripcion(),
+        //     producto.getPrecio(),
+        //     producto.getImage()
+        // };
 
-        final int[] types = {
-            Types.VARCHAR,
-            Types.VARCHAR,
-            Types.FLOAT,
-            Types.BLOB
-        };
+        // final int[] types = {
+        //     Types.VARCHAR,
+        //     Types.VARCHAR,
+        //     Types.FLOAT,
+        //     Types.BLOB
+        // };
         
-        int update = getJdbcTemplate().update(query, params, types);
+        // int update = getJdbcTemplate().update(query, params, types);
         
-        PreparedStatement ps = getConnection().prepareStatement(query, params);
-        KeyHolder KeyHolder;
-
         KeyHolder keyHolder = new GeneratedKeyHolder();
 
-        getJdbcTemplate().update(connection -> {
-            PreparedStatement ps = connection
-              .prepareStatement(INSERT_MESSAGE_SQL);
-              ps.setString(1, message);
-              return ps;
-            }, keyHolder);
-    
-            return (long) keyHolder.getKey();
-            
-        getJdbcTemplate().update(psc, KeyHolder);
-        
+        getJdbcTemplate().update(new PreparedStatementCreator() {
+
+            @Override
+            public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
+                PreparedStatement ps = getConnection().prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+
+                ps.setString(1, producto.getNombre());
+                ps.setString(2, producto.getDescripcion());
+                ps.setFloat(3, producto.getPrecio());
+                InputStream is = new ByteArrayInputStream(producto.getImage());
+                
+                ps.setBlob(4, is);
+                return ps;
+            }
+        }, keyHolder);
+
+        producto.setCodigo(keyHolder.getKey().intValue());
     }
+
 
     @Override
     public void update(Producto producto) {
