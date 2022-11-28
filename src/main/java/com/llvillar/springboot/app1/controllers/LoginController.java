@@ -36,7 +36,7 @@ public class LoginController {
         return "welcome";
     }
 
-    @GetMapping(value = "/login")
+    @RequestMapping(value = "/login")
     public String loginGet(Model model, Usuario usuario, HttpSession session) {
 
         usuario = new Usuario();

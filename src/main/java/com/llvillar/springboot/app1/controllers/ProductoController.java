@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,8 +30,8 @@ public class ProductoController {
     public ModelAndView list(Model model) {
 
 
-        
-        List<Producto> productos = productosService.findAll();
+        Pageable pageable = null;
+        List<Producto> productos = productosService.findAll(pageable);
 
         ModelAndView modelAndView = new ModelAndView("productos/list");
         modelAndView.addObject("productos", productos);
@@ -99,11 +100,11 @@ public class ProductoController {
 
 
         productosService.delete(codigo);
-        List<Producto> productos = productosService.findAll();
+        // List<Producto> productos = productosService.findAll();
 
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("productos", productos);
-        modelAndView.setViewName("productos/list");
+        // modelAndView.addObject("productos", productos);
+        modelAndView.setViewName("redirect:list");
         return modelAndView;
     }
 

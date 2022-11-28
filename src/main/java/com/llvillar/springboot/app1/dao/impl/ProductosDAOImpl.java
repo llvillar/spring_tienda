@@ -14,6 +14,8 @@ import javax.annotation.PostConstruct;
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
@@ -38,7 +40,21 @@ public class ProductosDAOImpl extends JdbcDaoSupport implements ProductosDAO{
 	}
 
     @Override
-    public List<Producto> findAll() {
+    public List<Producto> findAll(Pageable page) {
+
+        // int pageSize = page.getPageSize();
+        // long offset = page.getOffset();
+        // Sort sort = page.getSort();
+
+        String queryCount = "select count(1) from Productos";
+
+        // Object paramsCount [] = {};
+        // int typesCount [] = {};
+
+        Integer total = getJdbcTemplate().queryForObject(queryCount,Integer.class);
+
+
+
         
         String query = "select * from Productos";
 
