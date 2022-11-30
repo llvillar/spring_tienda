@@ -133,7 +133,7 @@ public class ProductoController {
 
         ModelAndView modelAndView = new ModelAndView();
         // modelAndView.addObject("productos", productos);
-        modelAndView.setViewName("redirect:list");
+        modelAndView.setViewName("redirect:../list");
         return modelAndView;
     }
 

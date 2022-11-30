@@ -10,8 +10,8 @@
                 aria-label="Primero" title="Primero">Primero</a>
             </li>
 
-            <li class="page-item" th:if="${numeroPagina > 1}"
-              th:classappend="${ numeroPagina > totalPaginas} ? 'disabled' ">
+            <li class="page-item" th:if="${numPage > 1}"
+              th:classappend="${ numPage > totalPages} ? 'disabled' ">
               <a class="page-link"
               th:href="@{../../../list/{numPage}/{fieldSort}/{directionSort}(numPage=${numPage-1},fieldSort=${fieldSort},directionSort=${directionSort})}"
               aria-label="Anterior" title="Anterior">Anterior</a>

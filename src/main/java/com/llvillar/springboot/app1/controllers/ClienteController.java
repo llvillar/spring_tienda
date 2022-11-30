@@ -113,7 +113,7 @@ public class ClienteController {
         clientesService.delete(codigo);
 
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("redirect:list");
+        modelAndView.setViewName("redirect:../list");
         return modelAndView;
     }
 }
