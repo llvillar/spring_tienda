@@ -45,6 +45,7 @@ public class ClientesDAOImpl extends JdbcDaoSupport implements ClientesDAO{
         + order.getDirection().name() + " LIMIT " + page.getPageSize() + " OFFSET " + page.getOffset();
 
         final List<Cliente> clientes = getJdbcTemplate().query(query, new ClienteMapper());
+        // Producto producto = (Producto) getJdbcTemplate().queryForObject(query, params, types, new BeanPropertyRowMapper(Producto.class));
 
         return new PageImpl<Cliente>(clientes, page, total);
 

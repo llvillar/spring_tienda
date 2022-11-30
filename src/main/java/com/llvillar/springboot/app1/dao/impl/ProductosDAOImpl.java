@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Types;
@@ -22,9 +23,11 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Order;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.PreparedStatementCreator;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
+import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Repository;
 
 import com.llvillar.springboot.app1.dao.ProductosDAO;
@@ -56,7 +59,24 @@ public class ProductosDAOImpl extends JdbcDaoSupport implements ProductosDAO{
         String query = "SELECT * FROM Productos ORDER BY " + order.getProperty() + " "
         + order.getDirection().name() + " LIMIT " + page.getPageSize() + " OFFSET " + page.getOffset();
 
-        final List<Producto> productos = getJdbcTemplate().query(query, new ProductoMapper());
+        final List<Producto> productos = getJdbcTemplate().query(query, new RowMapper<Producto>() {
+
+            @Override
+            @Nullable
+            public Producto mapRow(ResultSet rs, int rowNum) throws SQLException {
+                Producto producto = new Producto();
+                producto.setCodigo(rs.getInt("codigo"));
+                producto.setNombre(rs.getString("nombre"));
+                producto.setDescripcion(rs.getString("descripcion"));
+                producto.setPrecio(rs.getFloat("precio"));
+                producto.setImage(rs.getBytes("image"));
+        
+                return producto;
+            }
+            
+        });
+
+        
 
         return new PageImpl<Producto>(productos, page, total);
 
@@ -70,8 +90,22 @@ public class ProductosDAOImpl extends JdbcDaoSupport implements ProductosDAO{
         Object params [] = {codigo};
         int types [] = {Types.INTEGER};
 
-        Producto producto = (Producto) getJdbcTemplate().queryForObject(query, params, types, new BeanPropertyRowMapper(Producto.class));
+        Producto producto = (Producto) getJdbcTemplate().queryForObject(query, params, types, new RowMapper<Producto>() {
 
+            @Override
+            @Nullable
+            public Producto mapRow(ResultSet rs, int rowNum) throws SQLException {
+                Producto producto = new Producto();
+                producto.setCodigo(rs.getInt("codigo"));
+                producto.setNombre(rs.getString("nombre"));
+                producto.setDescripcion(rs.getString("descripcion"));
+                producto.setPrecio(rs.getFloat("precio"));
+                producto.setImage(rs.getBytes("image"));
+        
+                return producto;
+            }
+            
+        });
         return producto;
     }
 
