@@ -1,17 +1,19 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head th:replace="commons/header :: header" />
 
 <body>
   <div th:replace="commons/menu :: menu">
     <nav class="navbar navbar-expand-lg bg-light">
-        <div class="container-fluid">
-          <a class="navbar-brand" href="#">Menu</a>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-        </div>
-      </nav>    
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">Menu</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      </div>
+    </nav>
   </div>
 
   <div class="row">
@@ -19,50 +21,45 @@
   </div>
 
   <div class="row">
-      <div class="col-lg-3">
-          <a th:href="@{/productos/create}" class="btn btn-primary btn-sm mb-3" th:text="#{producto.boton.nuevo}">Nuevo producto</a>
-      </div>
+    <div class="col-lg-3">
+      <a th:href="@{/productos/create}" class="btn btn-primary btn-sm mb-3" th:text="#{producto.boton.nuevo}">Nuevo
+        producto</a>
+    </div>
   </div>
 
   <div class="container">
     <div class="row">
       <div th:each="producto : ${productos}" class="col-3">
-          <!-- card-->
-          <div class="card" style="width: 18rem;">
-            <img th:src="'data:image/jpeg;base64,' + ${producto.imageView}" src="../static/img/cocacola.jpg" class="card-img-top" alt="..." />
+        <!-- card-->
+        <div class="card" style="width: 18rem;">
+          <img th:src="'data:image/jpeg;base64,' + ${producto.imageView}" src="../static/img/cocacola.jpg"
+            class="card-img-top" alt="..." />
 
-            <!-- <img th:src="@{${producto.image}}" src="../static/img/cocacola.jpg" class="card-img-top" alt="..."> -->
-            <div class="card-body">
-              <h5 th:text="${producto.nombre}" class="card-title">Card title</h5>
-              <h7 th:text="${producto.precio}" class="card-text">Card title</h7>
-              <!-- <p th:text="${producto.descripcion}" class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> -->
-              <a th:href="@{/productos/edit/} + ${producto.codigo}" href="edit.html" class="btn btn-primary"><i class="bi bi-pencil-square"></i></a>
-              <a class="btn btn-primary" th:href="@{/productos/delete/}+${producto.codigo}" href="#" role="button"><i class="bi bi-trash"></i></a>
+          <!-- <img th:src="@{${producto.image}}" src="../static/img/cocacola.jpg" class="card-img-top" alt="..."> -->
+          <div class="card-body">
+            <h5 th:text="${producto.nombre}" class="card-title">Card title</h5>
+            <h7 th:text="${producto.precio}" class="card-text">Card title</h7>
+            <!-- <p th:text="${producto.descripcion}" class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> -->
+            <a th:href="@{/productos/edit/} + ${producto.codigo}" href="edit.html" class="btn btn-primary"><i
+                class="bi bi-pencil-square"></i></a>
+            <a class="btn btn-primary" th:href="@{/productos/delete/}+${producto.codigo}" href="#" role="button"><i
+                class="bi bi-trash"></i></a>
 
-            </div>
           </div>
+        </div>
       </div>
     </div>
-    <div class="row">
-      <div class="col-12">
 
-          <!-- Paginacion-->
-          <nav aria-label="Page navigation example">
-            <ul class="pagination justify-content-center">
-              <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-              <li class="page-item"><a class="page-link" href="#">1</a></li>
-              <li class="page-item"><a class="page-link" href="#">2</a></li>
-              <li class="page-item"><a class="page-link" href="#">3</a></li>
-              <li class="page-item"><a class="page-link" href="#">Next</a></li>
-            </ul>
-          </nav>
-        
-        </div>
+    <div class="row">
+
+      <head th:replace="commons/pagination :: pagination" />
+
 
     </div>
 
   </div>
-  
+
   <div th:replace="commons/footer :: footer" class="container"></div>
-  </body>
+</body>
+
 </html>

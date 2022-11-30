@@ -7,6 +7,10 @@ import javax.annotation.PostConstruct;
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort.Order;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 import org.springframework.stereotype.Repository;
@@ -28,13 +32,22 @@ public class ClientesDAOImpl extends JdbcDaoSupport implements ClientesDAO{
 	}
 
     @Override
-    public List<Cliente> findAll() {
-        
-        String query = "select * from Clientes";
+    public Page<Cliente> findAll(Pageable page) {
+
+    
+        String queryCount = "select count(1) from Clientes";
+        Integer total = getJdbcTemplate().queryForObject(queryCount,Integer.class);
+
+
+        Order order = !page.getSort().isEmpty() ? page.getSort().toList().get(0) : Order.by("codigo");
+
+        String query = "SELECT * FROM Clientes ORDER BY " + order.getProperty() + " "
+        + order.getDirection().name() + " LIMIT " + page.getPageSize() + " OFFSET " + page.getOffset();
 
         final List<Cliente> clientes = getJdbcTemplate().query(query, new ClienteMapper());
 
-        return clientes;
+        return new PageImpl<Cliente>(clientes, page, total);
+
     }
 
     @Override

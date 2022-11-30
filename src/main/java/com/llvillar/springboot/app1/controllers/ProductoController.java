@@ -2,9 +2,14 @@ package com.llvillar.springboot.app1.controllers;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,18 +31,42 @@ public class ProductoController {
     @Autowired
     ProductosService productosService;
 
-    @GetMapping(value="/list")
-    public ModelAndView list(Model model) {
+    @Value("${pagination.size}")
+    int sizePage;
 
 
-        Pageable pageable = null;
-        List<Producto> productos = productosService.findAll(pageable);
+    @GetMapping(value = "/list")
+    public ModelAndView list(Model model){
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("redirect:list/1/codigo/asc");
+        return modelAndView;
+    }
+  
+    @GetMapping(value = "/list/{numPage}/{fieldSort}/{directionSort}")
+    public ModelAndView listPage(Model model,
+            @PathVariable("numPage") Integer numPage,
+            @PathVariable("fieldSort") String fieldSort,
+            @PathVariable("directionSort") String directionSort) {
+
+
+        Pageable pageable = PageRequest.of(numPage - 1, sizePage,
+            directionSort.equals("asc") ? Sort.by(fieldSort).ascending() : Sort.by(fieldSort).descending());
+
+        Page<Producto> page = productosService.findAll(pageable);
+
+        List<Producto> productos = page.getContent();
 
         ModelAndView modelAndView = new ModelAndView("productos/list");
         modelAndView.addObject("productos", productos);
 
-        
-        modelAndView.addObject("imgUtil", new ImageUtil());
+
+		modelAndView.addObject("numPage", numPage);
+		modelAndView.addObject("totalPages", page.getTotalPages());
+		modelAndView.addObject("totalElements", page.getTotalElements());
+
+		modelAndView.addObject("fieldSort", fieldSort);
+		modelAndView.addObject("directionSort", directionSort.equals("asc") ? "asc" : "desc");
+
         return modelAndView;
     }
 
@@ -45,9 +74,8 @@ public class ProductoController {
     public ModelAndView edit(
             @PathVariable(name = "codigo", required = true) int codigo) {
 
-
         Producto producto = productosService.find(codigo);
-        
+
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("producto", producto);
         modelAndView.setViewName("productos/edit");
@@ -64,7 +92,8 @@ public class ProductoController {
     }
 
     @PostMapping(path = { "/save" })
-    public ModelAndView save(Producto producto, @RequestParam("imageForm") MultipartFile multipartFile) throws IOException {
+    public ModelAndView save(Producto producto, @RequestParam("imageForm") MultipartFile multipartFile)
+            throws IOException {
 
         byte[] image = multipartFile.getBytes();
 
@@ -81,7 +110,8 @@ public class ProductoController {
     }
 
     @PostMapping(path = { "/update" })
-    public ModelAndView update(Producto producto, @RequestParam("imageForm") MultipartFile multipartFile) throws IOException {
+    public ModelAndView update(Producto producto, @RequestParam("imageForm") MultipartFile multipartFile)
+            throws IOException {
 
         byte[] image = multipartFile.getBytes();
 
@@ -97,7 +127,6 @@ public class ProductoController {
     @GetMapping(path = { "/delete/{codigo}" })
     public ModelAndView delete(
             @PathVariable(name = "codigo", required = true) int codigo) {
-
 
         productosService.delete(codigo);
         // List<Producto> productos = productosService.findAll();

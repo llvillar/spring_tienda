@@ -3,6 +3,8 @@ package com.llvillar.springboot.app1.services.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +19,7 @@ public class ProductosServiceImpl implements ProductosService{
     ProductosDAO productosDAO;
 
     @Override
-    public List<Producto> findAll(Pageable pageable) {
+    public Page<Producto> findAll(Pageable pageable) {
         return productosDAO.findAll(pageable);
     }
 

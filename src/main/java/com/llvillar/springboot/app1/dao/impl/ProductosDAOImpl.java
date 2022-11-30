@@ -14,8 +14,12 @@ import javax.annotation.PostConstruct;
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Order;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
@@ -40,27 +44,22 @@ public class ProductosDAOImpl extends JdbcDaoSupport implements ProductosDAO{
 	}
 
     @Override
-    public List<Producto> findAll(Pageable page) {
+    public Page<Producto> findAll(Pageable page) {
 
-        // int pageSize = page.getPageSize();
-        // long offset = page.getOffset();
-        // Sort sort = page.getSort();
-
+    
         String queryCount = "select count(1) from Productos";
-
-        // Object paramsCount [] = {};
-        // int typesCount [] = {};
-
         Integer total = getJdbcTemplate().queryForObject(queryCount,Integer.class);
 
 
+        Order order = !page.getSort().isEmpty() ? page.getSort().toList().get(0) : Order.by("codigo");
 
-        
-        String query = "select * from Productos";
+        String query = "SELECT * FROM Productos ORDER BY " + order.getProperty() + " "
+        + order.getDirection().name() + " LIMIT " + page.getPageSize() + " OFFSET " + page.getOffset();
 
-        final List<Producto> Productos = getJdbcTemplate().query(query, new ProductoMapper());
+        final List<Producto> productos = getJdbcTemplate().query(query, new ProductoMapper());
 
-        return Productos;
+        return new PageImpl<Producto>(productos, page, total);
+
     }
 
     @Override
