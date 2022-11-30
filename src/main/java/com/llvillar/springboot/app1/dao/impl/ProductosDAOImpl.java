@@ -2,7 +2,6 @@ package com.llvillar.springboot.app1.dao.impl;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
-import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -17,11 +16,8 @@ import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Order;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
@@ -31,7 +27,6 @@ import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Repository;
 
 import com.llvillar.springboot.app1.dao.ProductosDAO;
-import com.llvillar.springboot.app1.dao.mappers.ProductoMapper;
 import com.llvillar.springboot.app1.model.Producto;
 
 @Repository
