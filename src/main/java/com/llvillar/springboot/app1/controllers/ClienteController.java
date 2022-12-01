@@ -92,7 +92,7 @@ public class ClienteController {
         clientesService.save(cliente);
 
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("redirect:list");
+        modelAndView.setViewName("redirect:edit/" + cliente.getCodigo());
         return modelAndView;
     }
 
@@ -102,7 +102,7 @@ public class ClienteController {
         clientesService.update(cliente);
 
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("redirect:list");
+        modelAndView.setViewName("redirect:edit/" + cliente.getCodigo());
         return modelAndView;
     }
 

@@ -2,7 +2,6 @@ package com.llvillar.springboot.app1.controllers;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -22,7 +21,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.llvillar.springboot.app1.model.Producto;
 import com.llvillar.springboot.app1.services.ProductosService;
-import com.llvillar.springboot.app1.utils.ImageUtil;
 
 @Controller
 @RequestMapping("/productos")
@@ -101,10 +99,7 @@ public class ProductoController {
 
         productosService.save(producto);
 
-        // List<Producto> productos = productosService.findAll();
-
         ModelAndView modelAndView = new ModelAndView();
-        // modelAndView.addObject("productos", productos);
         modelAndView.setViewName("redirect:edit/" + producto.getCodigo());
         return modelAndView;
     }
