@@ -1,5 +1,9 @@
 package com.llvillar.springboot.app1.dao.impl;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.sql.Types;
 import java.util.List;
 
@@ -11,8 +15,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Order;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import com.llvillar.springboot.app1.dao.ClientesDAO;
@@ -75,27 +81,48 @@ public class ClientesDAOImpl extends JdbcDaoSupport implements ClientesDAO{
                                             " email," + 
                                             " vip)" + 
                                             " values (?, ?, ?, ?, ?, ?, ?)";
-        Object[] params = {
-            cliente.getNombre(),
-            cliente.getApellidos(),
-            cliente.getDni(),
-            cliente.getDireccion(),
-            cliente.getTelefono(),
-            cliente.getEmail(),
-            cliente.isVip()
-        };
+        // Object[] params = {
+        //     cliente.getNombre(),
+        //     cliente.getApellidos(),
+        //     cliente.getDni(),
+        //     cliente.getDireccion(),
+        //     cliente.getTelefono(),
+        //     cliente.getEmail(),
+        //     cliente.isVip()
+        // };
 
-        final int[] types = {
-            Types.VARCHAR,
-            Types.VARCHAR,
-            Types.VARCHAR,
-            Types.VARCHAR,
-            Types.VARCHAR,
-            Types.VARCHAR,
-            Types.BOOLEAN
-        };
+        // final int[] types = {
+        //     Types.VARCHAR,
+        //     Types.VARCHAR,
+        //     Types.VARCHAR,
+        //     Types.VARCHAR,
+        //     Types.VARCHAR,
+        //     Types.VARCHAR,
+        //     Types.BOOLEAN
+        // };
         
-        int update = getJdbcTemplate().update(query, params, types);
+        // int update = getJdbcTemplate().update(query, params, types);
+
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+
+        getJdbcTemplate().update(new PreparedStatementCreator() {
+
+            @Override
+            public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
+                PreparedStatement ps = getConnection().prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+
+                ps.setString(1, cliente.getNombre());
+                ps.setString(2, cliente.getApellidos());
+                ps.setString(3, cliente.getDni());
+                ps.setString(4, cliente.getDireccion());
+                ps.setString(5, cliente.getTelefono());
+                ps.setString(6, cliente.getEmail());
+                ps.setBoolean(7, cliente.isVip());
+                return ps;
+            }
+        }, keyHolder);
+
+        cliente.setCodigo(keyHolder.getKey().intValue());
         
     }
 
