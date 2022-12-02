@@ -1,7 +1,10 @@
 package com.llvillar.springboot.app1.controllers;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
+
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -19,6 +22,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.llvillar.springboot.app1.model.DetallePedido;
+import com.llvillar.springboot.app1.model.Pedido;
 import com.llvillar.springboot.app1.model.Producto;
 import com.llvillar.springboot.app1.services.ProductosService;
 
@@ -68,14 +73,16 @@ public class ProductoController {
         return modelAndView;
     }
 
-    @GetMapping(path = { "/edit/{codigo}" })
+    @GetMapping(path = { "/edit/{codigo}/{cesta}" })
     public ModelAndView edit(
-            @PathVariable(name = "codigo", required = true) int codigo) {
+            @PathVariable(name = "codigo", required = true) int codigo, @PathVariable(name = "cesta", required = false) boolean cesta) {
 
         Producto producto = productosService.find(codigo);
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("producto", producto);
+        modelAndView.addObject("cesta", cesta);
+
         modelAndView.setViewName("productos/edit");
         return modelAndView;
     }
@@ -130,6 +137,35 @@ public class ProductoController {
         // modelAndView.addObject("productos", productos);
         modelAndView.setViewName("redirect:../list");
         return modelAndView;
+    }
+
+    @GetMapping(value = "/addcesta/{codigo}/{cantidad}")
+    public ModelAndView addCliente(
+        @PathVariable(name = "codigo", required = true) int codigo, @PathVariable(name = "cantidad", required = true) int cantidad,HttpSession session) {
+
+            Producto producto = productosService.find(codigo);
+
+            Pedido pedido = (Pedido) session.getAttribute("pedido");
+
+            if(pedido == null){
+                pedido = new Pedido();
+            }
+
+            if(pedido.getDetallePedidos() == null){
+                List<DetallePedido> detallePedidos = new ArrayList<DetallePedido>();
+                pedido.setDetallePedidos(detallePedidos);
+            }
+
+            DetallePedido detalle = new DetallePedido();
+            detalle.setProducto(producto);
+            detalle.setCantidad(cantidad);
+            pedido.getDetallePedidos().add(detalle);
+
+            session.setAttribute("pedido", pedido);
+
+            ModelAndView modelAndView = new ModelAndView();
+            modelAndView.setViewName("redirect:/cesta/edit");
+            return modelAndView;
     }
 
 }

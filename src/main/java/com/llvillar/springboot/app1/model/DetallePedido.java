@@ -1,11 +1,11 @@
 package com.llvillar.springboot.app1.model;
 
-public class ProductoCesta {
+public class DetallePedido {
 
     private Producto producto;
     private int cantidad;
     
-    public ProductoCesta() {
+    public DetallePedido() {
     }
 
     public Producto getProducto() {

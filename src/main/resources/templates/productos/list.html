@@ -41,8 +41,8 @@
             <h7 th:text="${producto.precio}" class="card-text">Card title</h7>
             <!-- <p th:text="${producto.descripcion}" class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> -->
 
-            <a class="btn btn-primary" th:href="@{/cesta/addProducto/}+${producto.codigo}" href="#" role="button"><i class="bi bi-cart3"></i></a>
-            <a th:href="@{/productos/edit/} + ${producto.codigo}" href="edit.html" class="btn btn-primary"><i class="bi bi-pencil-square"></i></a>
+            <a class="btn btn-primary" th:href="@{/productos/edit/{codigo}/true(codigo=${producto.codigo})}" href="#" role="button"><i class="bi bi-cart3"></i></a>
+            <a th:href="@{/productos/edit/{codigo}/false(codigo=${producto.codigo})}" href="edit.html" class="btn btn-primary"><i class="bi bi-pencil-square"></i></a>
             <a class="btn btn-primary" th:href="@{/productos/delete/}+${producto.codigo}" href="#" role="button"><i class="bi bi-trash"></i></a>
           </div>
         </div>

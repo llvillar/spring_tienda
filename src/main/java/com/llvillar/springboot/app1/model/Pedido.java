@@ -9,7 +9,7 @@ public class Pedido {
     private double total;
     private Date fecha;
     private Cliente cliente;
-    private List<ProductoCesta> productosCesta;
+    private List<DetallePedido> detallePedidos;
     
     public Pedido() {
     }
@@ -46,11 +46,11 @@ public class Pedido {
         this.cliente = cliente;
     }
 
-    public List<ProductoCesta> getProductosCesta() {
-        return productosCesta;
+    public List<DetallePedido> getDetallePedidos() {
+        return detallePedidos;
     }
 
-    public void setProductosCesta(List<ProductoCesta> productosCesta) {
-        this.productosCesta = productosCesta;
+    public void setDetallePedidos(List<DetallePedido> detallePedidos) {
+        this.detallePedidos = detallePedidos;
     }
 }
