@@ -1,7 +1,6 @@
 package com.llvillar.springboot.app1.controllers;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -18,21 +17,17 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.llvillar.springboot.app1.model.DetallePedido;
 import com.llvillar.springboot.app1.model.Pedido;
-import com.llvillar.springboot.app1.model.Producto;
-import com.llvillar.springboot.app1.services.ProductosService;
+import com.llvillar.springboot.app1.services.PedidosService;
 
 @Controller
-@RequestMapping("/productos")
-public class ProductoController {
+@RequestMapping("/pedidos")
+public class PedidoController {
 
     @Autowired
-    ProductosService productosService;
+    PedidosService pedidosService;
 
     @Value("${pagination.size}")
     int sizePage;
@@ -55,12 +50,12 @@ public class ProductoController {
         Pageable pageable = PageRequest.of(numPage - 1, sizePage,
             directionSort.equals("asc") ? Sort.by(fieldSort).ascending() : Sort.by(fieldSort).descending());
 
-        Page<Producto> page = productosService.findAll(pageable);
+        Page<Pedido> page = pedidosService.findAll(pageable);
 
-        List<Producto> productos = page.getContent();
+        List<Pedido> pedidos = page.getContent();
 
-        ModelAndView modelAndView = new ModelAndView("productos/list");
-        modelAndView.addObject("productos", productos);
+        ModelAndView modelAndView = new ModelAndView("pedidos/list");
+        modelAndView.addObject("pedidos", pedidos);
 
 
 		modelAndView.addObject("numPage", numPage);
@@ -77,52 +72,50 @@ public class ProductoController {
     public ModelAndView edit(
             @PathVariable(name = "codigo", required = true) int codigo, @PathVariable(name = "cesta", required = false) boolean cesta) {
 
-        Producto producto = productosService.find(codigo);
+        Pedido pedido = pedidosService.find(codigo);
 
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("producto", producto);
+        modelAndView.addObject("pedido", pedido);
         modelAndView.addObject("cesta", cesta);
 
-        modelAndView.setViewName("productos/edit");
+        modelAndView.setViewName("pedidos/edit");
         return modelAndView;
     }
 
     @GetMapping(path = { "/create" })
-    public ModelAndView create(Producto producto) {
+    public ModelAndView create(Pedido pedido) {
 
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("producto", new Producto());
-        modelAndView.setViewName("productos/new");
+        modelAndView.addObject("pedido", new Pedido());
+        modelAndView.setViewName("pedidos/new");
         return modelAndView;
     }
 
-    @PostMapping(path = { "/save" })
-    public ModelAndView save(Producto producto, @RequestParam("imageForm") MultipartFile multipartFile)
+    @GetMapping(path = { "/save" })
+    public ModelAndView save(HttpSession session)
             throws IOException {
 
-        byte[] image = multipartFile.getBytes();
+        Pedido pedido = (Pedido) session.getAttribute("pedido");
 
-        producto.setImage(image);
+        pedidosService.save(pedido);
 
-        productosService.save(producto);
+        session.removeAttribute("pedido");
 
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("redirect:edit/" + producto.getCodigo());
+//        modelAndView.setViewName("redirect:edit/" + pedido.getCodigo());
+        modelAndView.setViewName("redirect:list/1/codigo/asc");
+
         return modelAndView;
     }
 
     @PostMapping(path = { "/update" })
-    public ModelAndView update(Producto producto, @RequestParam("imageForm") MultipartFile multipartFile)
+    public ModelAndView update(Pedido pedido)
             throws IOException {
 
-        byte[] image = multipartFile.getBytes();
-
-        producto.setImage(image);
-
-        productosService.update(producto);
+        pedidosService.update(pedido);
 
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("redirect:edit/" + producto.getCodigo());
+        modelAndView.setViewName("redirect:edit/" + pedido.getCodigo());
         return modelAndView;
     }
 
@@ -130,43 +123,12 @@ public class ProductoController {
     public ModelAndView delete(
             @PathVariable(name = "codigo", required = true) int codigo) {
 
-        productosService.delete(codigo);
-        // List<Producto> productos = productosService.findAll();
+        pedidosService.delete(codigo);
+        // List<Pedido> pedidos = pedidosService.findAll();
 
         ModelAndView modelAndView = new ModelAndView();
-        // modelAndView.addObject("productos", productos);
+        // modelAndView.addObject("pedidos", pedidos);
         modelAndView.setViewName("redirect:../list");
         return modelAndView;
     }
-
-    @GetMapping(value = "/addcesta/{codigo}/{cantidad}")
-    public ModelAndView addCliente(
-        @PathVariable(name = "codigo", required = true) int codigo, @PathVariable(name = "cantidad", required = true) int cantidad,HttpSession session) {
-
-            Producto producto = productosService.find(codigo);
-
-            Pedido pedido = (Pedido) session.getAttribute("pedido");
-
-            if(pedido == null){
-                pedido = new Pedido();
-            }
-
-            if(pedido.getDetallePedidos() == null){
-                List<DetallePedido> detallePedidos = new ArrayList<DetallePedido>();
-                pedido.setDetallePedidos(detallePedidos);
-            }
-
-            DetallePedido detalle = new DetallePedido();
-            detalle.setProducto(producto);
-            detalle.setCantidad(cantidad);
-            detalle.setSubtotal(cantidad*producto.getPrecio());
-            pedido.getDetallePedidos().add(detalle);
-
-            session.setAttribute("pedido", pedido);
-
-            ModelAndView modelAndView = new ModelAndView();
-            modelAndView.setViewName("redirect:/cesta/edit");
-            return modelAndView;
-    }
-
 }

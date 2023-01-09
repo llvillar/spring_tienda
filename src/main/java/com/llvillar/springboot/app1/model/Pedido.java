@@ -1,5 +1,6 @@
 package com.llvillar.springboot.app1.model;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -12,6 +13,8 @@ public class Pedido {
     private List<DetallePedido> detallePedidos;
     
     public Pedido() {
+        this.cliente = new Cliente();
+        this.detallePedidos = new ArrayList<DetallePedido>();
     }
 
     public long getCodigo() {
@@ -23,6 +26,12 @@ public class Pedido {
     }
 
     public double getTotal() {
+
+        total = 0;
+        for (DetallePedido detalle : this.detallePedidos) {
+            total += detalle.getCantidad()*detalle.getProducto().getPrecio();
+        }
+
         return total;
     }
 
