@@ -20,6 +20,7 @@
             <th scope="col">Cliente</th>
             <th scope="col">Fecha</th>
             <th scope="col">Total</th>
+            <th scope="col"></th>
           </tr>
         </thead>
         <tbody>
@@ -28,6 +29,9 @@
             <td th:text="${pedido.cliente.nombre}">Mark</td>
             <td th:text="${pedido.fecha}">Mark</td>
             <td th:text="${pedido.total}">Mark</td>
+            <td>
+              <a class="btn btn-primary" th:href="@{/pedidos/edit/}+${pedido.codigo}" href="#" role="button"><i class="bi bi-pencil-square"></i></a>
+            </td>
           </tr>
         </tbody>
       </table>

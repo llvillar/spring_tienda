@@ -2,6 +2,7 @@ package com.llvillar.springboot.app1.controllers;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Locale;
 
 import javax.servlet.http.HttpSession;
 
@@ -36,7 +37,7 @@ public class PedidoController {
     @GetMapping(value = "/list")
     public ModelAndView list(Model model){
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("redirect:list/1/codigo/asc");
+        modelAndView.setViewName("redirect:list/1/codigo/desc");
         return modelAndView;
     }
   
@@ -68,26 +69,16 @@ public class PedidoController {
         return modelAndView;
     }
 
-    @GetMapping(path = { "/edit/{codigo}/{cesta}" })
+    @GetMapping(path = { "/edit/{codigo}" })
     public ModelAndView edit(
-            @PathVariable(name = "codigo", required = true) int codigo, @PathVariable(name = "cesta", required = false) boolean cesta) {
+            @PathVariable(name = "codigo", required = true) int codigo, final Locale locale) {
 
         Pedido pedido = pedidosService.find(codigo);
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("pedido", pedido);
-        modelAndView.addObject("cesta", cesta);
 
         modelAndView.setViewName("pedidos/edit");
-        return modelAndView;
-    }
-
-    @GetMapping(path = { "/create" })
-    public ModelAndView create(Pedido pedido) {
-
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("pedido", new Pedido());
-        modelAndView.setViewName("pedidos/new");
         return modelAndView;
     }
 
@@ -102,33 +93,8 @@ public class PedidoController {
         session.removeAttribute("pedido");
 
         ModelAndView modelAndView = new ModelAndView();
-//        modelAndView.setViewName("redirect:edit/" + pedido.getCodigo());
-        modelAndView.setViewName("redirect:list/1/codigo/asc");
+        modelAndView.setViewName("redirect:list");
 
-        return modelAndView;
-    }
-
-    @PostMapping(path = { "/update" })
-    public ModelAndView update(Pedido pedido)
-            throws IOException {
-
-        pedidosService.update(pedido);
-
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("redirect:edit/" + pedido.getCodigo());
-        return modelAndView;
-    }
-
-    @GetMapping(path = { "/delete/{codigo}" })
-    public ModelAndView delete(
-            @PathVariable(name = "codigo", required = true) int codigo) {
-
-        pedidosService.delete(codigo);
-        // List<Pedido> pedidos = pedidosService.findAll();
-
-        ModelAndView modelAndView = new ModelAndView();
-        // modelAndView.addObject("pedidos", pedidos);
-        modelAndView.setViewName("redirect:../list");
         return modelAndView;
     }
 }

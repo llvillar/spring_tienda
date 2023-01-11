@@ -22,13 +22,11 @@
       <div class="row g-5">
         
         <div class="col-8">
-          <h5 class="mb-3" >Contenido de la cesta</h5>
+          <h5 class="mb-3" th:text="|Pedido ${pedido.codigo}|">Pedido </h5>
           <form class="needs-validation"  method="post"  novalidate>
             <div class="row g-4">
               <div class="col-sm-6">
-                <label class="form-label" th:text="|${cliente.nombre} ${cliente.apellidos} ${cliente.dni} ${cliente.email}|"></label>
-                <label class="form-label" th:text="|${cliente.direccion} ${cliente.apellidos} ${cliente.dni}|"></label>
-                <label class="form-check-label" for="vip"  th:text="#{cliente.vip}">Es cliente VIP</label>
+                <label class="form-label" th:text="|${pedido.cliente.nombre}|"></label>
               </div>  
           </form>
         </div>
@@ -54,22 +52,14 @@
               <td th:text="${detalle.producto.precio}">Mark</td>
               <td th:text="${detalle.cantidad}">Mark</td>
               <td th:text="${detalle.producto.precio*detalle.cantidad}">Mark</td>
-              <td>
-                <a class="btn btn-primary" th:href="@{/cesta/deleteproducto/}+${detalle.producto.codigo}" href="#" role="button"><i class="bi bi-trash"></i></a>
-              </td>
             </tr>
             <tr>
               <td colspan="4" style="text-align: right;">Total</td>
-              <td th:text="${pedido.totalCesta}"></td>
+              <td th:text="${#numbers.formatCurrency(pedido.total)}"></td>
             </tr>
           </tbody>
         </table>
-      
-        <div class="row">
-          <div class="col-lg-3">
-            <a th:href="@{/pedidos/save}" class="btn btn-primary btn-sm mb-3">Tramitar pedido</a>
-          </div>
-        </div>
+    
     </main>
   </div>
   

@@ -1,37 +1,23 @@
 package com.llvillar.springboot.app1.dao.impl;
 
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.sql.Types;
-import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort.Order;
-import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
-import org.springframework.jdbc.support.GeneratedKeyHolder;
-import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Repository;
 
 import com.llvillar.springboot.app1.dao.DetallePedidoDAO;
-import com.llvillar.springboot.app1.dao.PedidosDAO;
-import com.llvillar.springboot.app1.model.Cliente;
 import com.llvillar.springboot.app1.model.DetallePedido;
 import com.llvillar.springboot.app1.model.Pedido;
+import com.llvillar.springboot.app1.model.Producto;
 
 @Repository
 public class DetallePedidoDAOImpl extends JdbcDaoSupport implements DetallePedidoDAO{
@@ -73,5 +59,42 @@ public class DetallePedidoDAOImpl extends JdbcDaoSupport implements DetallePedid
         };
         
         int update = getJdbcTemplate().update(query, params, types);        
+    }
+
+
+
+
+    @Override
+    public List<DetallePedido> findDetalle(Pedido pedido) {
+
+    
+            String query = "SELECT dp.*, p.nombre nombre_producto, p.precio precio FROM Detalle_Pedido dp, Productos p" + 
+            " where dp.codigo_producto = p.codigo and codigo_pedido = ?";
+    
+
+
+        Object params [] = {pedido.getCodigo()};
+        int types [] = {Types.INTEGER};
+
+
+            final List<DetallePedido> detalles = getJdbcTemplate().query(query, params, types,new RowMapper<DetallePedido>() {
+    
+                @Override
+                @Nullable
+                public DetallePedido mapRow(ResultSet rs, int rowNum) throws SQLException {
+                    DetallePedido detalle = new DetallePedido();
+                    detalle.setCodigo(rs.getInt("codigo"));
+                    detalle.setCantidad(rs.getInt("cantidad"));
+                    detalle.setSubtotal(rs.getFloat("total"));
+                    Producto producto = new Producto();
+                    producto.setCodigo(rs.getInt("codigo_producto"));
+                    producto.setNombre(rs.getString("nombre_producto"));
+                    producto.setPrecio(rs.getFloat("precio"));
+                    detalle.setProducto(producto);
+                    return detalle;
+                }
+            });
+    
+            return detalles;
     }
 }

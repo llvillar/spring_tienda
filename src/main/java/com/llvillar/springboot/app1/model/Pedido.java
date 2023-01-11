@@ -25,7 +25,7 @@ public class Pedido {
         this.codigo = codigo;
     }
 
-    public double getTotal() {
+    public double getTotalCesta() {
 
         total = 0;
         for (DetallePedido detalle : this.detallePedidos) {
@@ -34,6 +34,8 @@ public class Pedido {
 
         return total;
     }
+
+    
 
     public void setTotal(double total) {
         this.total = total;
@@ -61,5 +63,9 @@ public class Pedido {
 
     public void setDetallePedidos(List<DetallePedido> detallePedidos) {
         this.detallePedidos = detallePedidos;
+    }
+
+    public double getTotal() {
+        return total;
     }
 }
