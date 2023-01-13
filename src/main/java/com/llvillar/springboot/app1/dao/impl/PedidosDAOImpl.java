@@ -78,7 +78,7 @@ public class PedidosDAOImpl extends JdbcDaoSupport implements PedidosDAO{
     @Override
     public Pedido findById(int codigo) {
         
-        String query = "select p.*, c.nombre from Pedidos p where p.codigo = ?";
+        String query = "select p.* from Pedidos p where p.codigo = ?";
 
         Object params [] = {codigo};
         int types [] = {Types.INTEGER};
