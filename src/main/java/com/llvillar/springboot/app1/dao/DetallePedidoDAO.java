@@ -11,4 +11,7 @@ public interface DetallePedidoDAO {
 
     public List<DetallePedido> findDetalle(Pedido pedido);
 
+    public void delete(Pedido pedido);
+
+
 }

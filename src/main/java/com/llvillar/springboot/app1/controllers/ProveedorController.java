@@ -2,8 +2,6 @@ package com.llvillar.springboot.app1.controllers;
 
 import java.util.List;
 
-import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
@@ -18,8 +16,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.llvillar.springboot.app1.model.Proveedor;
-import com.llvillar.springboot.app1.model.Pedido;
 import com.llvillar.springboot.app1.model.Proveedor;
 import com.llvillar.springboot.app1.services.ProveedoresService;
 
@@ -51,11 +47,10 @@ public class ProveedorController {
         Pageable pageable = PageRequest.of(numPage - 1, sizePage,
             directionSort.equals("asc") ? Sort.by(fieldSort).ascending() : Sort.by(fieldSort).descending());
 
-        List<Proveedor> proveedores = proveedoresService.findAll();
 
-        // Page<Proveedor> page = proveedoresService.findAll(pageable);
+        Page<Proveedor> page = proveedoresService.findAll(pageable);
 
-        // List<Proveedor> proveedores = page.getContent();
+        List<Proveedor> proveedores = page.getContent();
 
         ModelAndView modelAndView = new ModelAndView("proveedores/list");
         modelAndView.addObject("proveedores", proveedores);
@@ -64,8 +59,8 @@ public class ProveedorController {
 		modelAndView.addObject("numPage", numPage);
 		modelAndView.addObject("totalPages", 1);
 		modelAndView.addObject("totalElements",1);
-		// modelAndView.addObject("totalPages", page.getTotalPages());
-		// modelAndView.addObject("totalElements", page.getTotalElements());
+		modelAndView.addObject("totalPages", page.getTotalPages());
+		modelAndView.addObject("totalElements", page.getTotalElements());
 
 		modelAndView.addObject("fieldSort", fieldSort);
 		modelAndView.addObject("directionSort", directionSort.equals("asc") ? "asc" : "desc");

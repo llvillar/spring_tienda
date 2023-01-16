@@ -1,6 +1,5 @@
 package com.llvillar.springboot.app1.services.impl;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,8 +18,8 @@ public class ProveedoresServiceImpl implements ProveedoresService{
     ProveedorRepository repository;
 
     @Override
-    public List<Proveedor> findAll() {
-        return repository.findAll();
+    public Page<Proveedor> findAll(Pageable pageable) {
+        return repository.findAll(pageable);
     }
 
     @Override
@@ -46,5 +45,7 @@ public class ProveedoresServiceImpl implements ProveedoresService{
     public void delete(int codigo) {
         repository.deleteById(codigo);        
     }
+
+
     
 }

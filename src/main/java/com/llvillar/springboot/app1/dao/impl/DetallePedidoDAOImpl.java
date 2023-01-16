@@ -97,4 +97,20 @@ public class DetallePedidoDAOImpl extends JdbcDaoSupport implements DetallePedid
     
             return detalles;
     }
+
+    @Override
+    public void delete(Pedido pedido) {
+        
+        String query = "delete from Detalle_Pedido where codigo_pedido = ?";
+
+        Object[] params = {
+            pedido.getCodigo()
+        };
+
+        final int[] types = {
+            Types.INTEGER
+        };
+        getJdbcTemplate().update(query, params, types);
+        
+    }
 }

@@ -65,6 +65,9 @@ public class PedidosServiceImpl implements PedidosService{
 
     @Override
     public void delete(int codigo) {
+        Pedido pedido = new Pedido();
+        pedido.setCodigo(codigo);
+        detallePedidoDAO.delete(pedido);
         pedidosDAO.delete(codigo);        
     }
     
