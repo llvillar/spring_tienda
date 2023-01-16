@@ -1,12 +1,15 @@
 package com.llvillar.springboot.app1.model;
 
+import javax.annotation.Generated;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 @Entity
 public class Proveedor {
     
     @Id
+    @GeneratedValue
     private int codigo;
     private String nombre;
     private String apellidos;

@@ -20,8 +20,7 @@ public class ProveedoresServiceImpl implements ProveedoresService{
 
     @Override
     public List<Proveedor> findAll() {
-        Iterable<Proveedor> findAll = repository.findAll();
-        findAll.forEach(null);
+        return repository.findAll();
     }
 
     @Override
