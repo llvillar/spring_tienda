@@ -1,12 +1,24 @@
 package com.llvillar.springboot.app1.model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Lob;
+
 import com.llvillar.springboot.app1.utils.ImageUtil;
 
+@Entity
 public class Producto {
+
+    @Id
+    @GeneratedValue
     private int codigo;
     private String nombre;
     private String descripcion;
     private float precio;
+    @Lob
+    @Column(length = 100000)
     private byte[] image;
 
     public Producto() {

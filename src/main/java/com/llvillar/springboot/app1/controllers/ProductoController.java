@@ -107,7 +107,7 @@ public class ProductoController {
         productosService.save(producto);
 
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("redirect:edit/" + producto.getCodigo());
+        modelAndView.setViewName("redirect:edit/" + producto.getCodigo() + "/false");
         return modelAndView;
     }
 
@@ -122,7 +122,7 @@ public class ProductoController {
         productosService.update(producto);
 
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("redirect:edit/" + producto.getCodigo());
+        modelAndView.setViewName("redirect:edit/" + producto.getCodigo( ) + "/false");
         return modelAndView;
     }
 
