@@ -1,6 +1,7 @@
 package com.llvillar.springboot.app1.services.impl;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -13,43 +14,50 @@ import com.llvillar.springboot.app1.dao.PedidosDAO;
 import com.llvillar.springboot.app1.model.Cliente;
 import com.llvillar.springboot.app1.model.DetallePedido;
 import com.llvillar.springboot.app1.model.Pedido;
+import com.llvillar.springboot.app1.repository.PedidoRepository;
 import com.llvillar.springboot.app1.services.PedidosService;
 
 @Service
 public class PedidosServiceImpl implements PedidosService{
 
     @Autowired
-    PedidosDAO pedidosDAO;
+    PedidoRepository repository;
 
     @Autowired
     DetallePedidoDAO detallePedidoDAO;
 
-    @Autowired
-    ClientesDAO clientesDAO;
+    // @Autowired
+    // ClientesDAO clientesDAO;
 
     @Override
     public Page<Pedido> findAll(Pageable pageable) {
-        return pedidosDAO.findAll(pageable);
+        return repository.findAll(pageable);
     }
 
     @Override
     public Pedido find(int codigo) {
-        Pedido pedido = pedidosDAO.findById(codigo);
+        Optional<Pedido> findById = repository.findById(codigo);
+        if(findById != null){
+            Pedido pedido = findById.get();
+            List<DetallePedido> detalle = detallePedidoDAO.findDetalle(pedido);
+            pedido.setDetallePedidos(detalle);
+            
+            return pedido;
+        }
 
-        Cliente cliente = clientesDAO.findById(pedido.getCliente().getCodigo());
+        return null;
 
-        pedido.setCliente(cliente);
+        // // Cliente cliente = clientesDAO.findById(pedido.getCliente().getCodigo());
 
-        List<DetallePedido> detalle = detallePedidoDAO.findDetalle(pedido);
-        pedido.setDetallePedidos(detalle);
-        
-        return pedido;
+        // // pedido.setCliente(cliente);
+
+
     }
 
     @Override
     public void save(Pedido pedido) {
         
-        pedidosDAO.insert(pedido);
+        repository.save(pedido);
 
         List<DetallePedido> detallePedidos = pedido.getDetallePedidos();
         for (DetallePedido detallePedido : detallePedidos) {
@@ -68,7 +76,7 @@ public class PedidosServiceImpl implements PedidosService{
         Pedido pedido = new Pedido();
         pedido.setCodigo(codigo);
         detallePedidoDAO.delete(pedido);
-        pedidosDAO.delete(codigo);        
+        repository.deleteById(codigo);        
     }
     
 }

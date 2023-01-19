@@ -1,8 +1,12 @@
 package com.llvillar.springboot.app1.model;
 
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.MapsId;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Cliente {
@@ -17,6 +21,9 @@ public class Cliente {
     private String telefono;
     private String direccion;
     private boolean vip;
+
+    // @OneToMany
+    // private List<Pedido> pedidos;
 
     public Cliente() {
     }
@@ -102,6 +109,8 @@ public class Cliente {
         this.vip = vip;
     }
 
+    
+
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -123,5 +132,13 @@ public class Cliente {
             return false;
         return true;
     }
+
+    // public List<Pedido> getPedidos() {
+    //     return pedidos;
+    // }
+
+    // public void setPedidos(List<Pedido> pedidos) {
+    //     this.pedidos = pedidos;
+    // }
 
 }
