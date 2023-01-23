@@ -68,8 +68,8 @@
 //     public List<DetallePedido> findDetalle(Pedido pedido) {
 
     
-//             String query = "SELECT dp.*, p.nombre nombre_producto, p.precio precio FROM Detalle_Pedido dp, Productos p" + 
-//             " where dp.codigo_producto = p.codigo and codigo_pedido = ?";
+            // String query = "SELECT dp.*, p.nombre nombre_producto, p.precio precio FROM Detalle_Pedido dp, Productos p" + 
+            // " where dp.codigo_producto = p.codigo and codigo_pedido = ?";
     
 
 

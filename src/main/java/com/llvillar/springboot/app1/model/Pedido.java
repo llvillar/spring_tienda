@@ -22,7 +22,6 @@ public class Pedido {
     @Id
     @GeneratedValue
     private int codigo;
-
     private double total;
     private Date fecha;
 

@@ -14,11 +14,11 @@ public class DetallePedido {
     @EmbeddedId
     private DetallePedidoId id = new DetallePedidoId();
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = true)
+    @ManyToOne(fetch = FetchType.EAGER, optional = true)
     @MapsId("producto_codigo")
     private Producto producto;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = true)
+    @ManyToOne(fetch = FetchType.EAGER, optional = true)
     @MapsId("pedido_codigo")
     private Pedido pedido;
 

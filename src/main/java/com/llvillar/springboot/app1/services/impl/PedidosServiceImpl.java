@@ -45,6 +45,8 @@ public class PedidosServiceImpl implements PedidosService{
         Optional<Pedido> findById = repositoryPedido.findById(codigo);
         if(findById != null){
             Pedido pedido = findById.get();
+
+            pedido.setDetallePedidos(repositoryDetalle.findByPedidoCodigo(pedido.getCodigo()));
             // List<DetallePedido> detalle = detallePedidoDAO.findDetalle(pedido);
             // pedido.setDetallePedidos(detalle);
             
