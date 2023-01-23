@@ -1,10 +1,27 @@
 package com.llvillar.springboot.app1.model;
 
+import javax.persistence.EmbeddedId;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.MapsId;
+
+@Entity
 public class DetallePedido {
 
-    private int codigo;
+    @EmbeddedId
+    private DetallePedidoId id = new DetallePedidoId();
 
+    @ManyToOne(fetch = FetchType.LAZY, optional = true)
+    @MapsId("producto_codigo")
     private Producto producto;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = true)
+    @MapsId("pedido_codigo")
+    private Pedido pedido;
+
     private int cantidad;
     private float subtotal;
     
@@ -37,13 +54,24 @@ public class DetallePedido {
     }
 
 
-    public int getCodigo() {
-        return codigo;
+
+    public Pedido getPedido() {
+        return pedido;
     }
 
 
-    public void setCodigo(int codigo) {
-        this.codigo = codigo;
+    public void setPedido(Pedido pedido) {
+        this.pedido = pedido;
+    }
+
+
+    public DetallePedidoId getId() {
+        return id;
+    }
+
+
+    public void setId(DetallePedidoId id) {
+        this.id = id;
     }
 
 

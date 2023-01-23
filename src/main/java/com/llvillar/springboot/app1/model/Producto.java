@@ -14,13 +14,16 @@ public class Producto {
     @Id
     @GeneratedValue
     private int codigo;
+    
     private String nombre;
     private String descripcion;
     private float precio;
+
     @Lob
     @Column(length = 100000)
     private byte[] image;
 
+    
     public Producto() {
     }
 

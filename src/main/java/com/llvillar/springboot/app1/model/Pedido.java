@@ -4,11 +4,13 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
+import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -19,7 +21,8 @@ public class Pedido {
 
     @Id
     @GeneratedValue
-    private long codigo;
+    private int codigo;
+
     private double total;
     private Date fecha;
 
@@ -34,11 +37,11 @@ public class Pedido {
         this.detallePedidos = new ArrayList<DetallePedido>();
     }
 
-    public long getCodigo() {
+    public int getCodigo() {
         return codigo;
     }
 
-    public void setCodigo(long codigo) {
+    public void setCodigo(int codigo) {
         this.codigo = codigo;
     }
 

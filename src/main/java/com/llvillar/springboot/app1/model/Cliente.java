@@ -1,12 +1,8 @@
 package com.llvillar.springboot.app1.model;
 
-import java.util.List;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.MapsId;
-import javax.persistence.OneToMany;
 
 @Entity
 public class Cliente {
@@ -14,6 +10,7 @@ public class Cliente {
     @Id
     @GeneratedValue
     private int codigo;
+
     private String nombre;
     private String apellidos;
     private String email;
@@ -21,9 +18,6 @@ public class Cliente {
     private String telefono;
     private String direccion;
     private boolean vip;
-
-    // @OneToMany
-    // private List<Pedido> pedidos;
 
     public Cliente() {
     }
