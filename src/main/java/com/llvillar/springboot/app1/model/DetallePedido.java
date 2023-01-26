@@ -3,8 +3,6 @@ package com.llvillar.springboot.app1.model;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
 
@@ -14,11 +12,11 @@ public class DetallePedido {
     @EmbeddedId
     private DetallePedidoId id = new DetallePedidoId();
 
-    @ManyToOne(fetch = FetchType.EAGER, optional = true)
+    @ManyToOne(fetch = FetchType.LAZY, optional = true)
     @MapsId("producto_codigo")
     private Producto producto;
 
-    @ManyToOne(fetch = FetchType.EAGER, optional = true)
+    @ManyToOne(fetch = FetchType.LAZY, optional = true)
     @MapsId("pedido_codigo")
     private Pedido pedido;
 

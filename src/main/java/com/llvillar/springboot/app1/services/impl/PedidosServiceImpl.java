@@ -9,10 +9,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.llvillar.springboot.app1.dao.ClientesDAO;
-import com.llvillar.springboot.app1.dao.DetallePedidoDAO;
-import com.llvillar.springboot.app1.dao.PedidosDAO;
-import com.llvillar.springboot.app1.model.Cliente;
 import com.llvillar.springboot.app1.model.DetallePedido;
 import com.llvillar.springboot.app1.model.DetallePedidoId;
 import com.llvillar.springboot.app1.model.Pedido;
@@ -29,12 +25,6 @@ public class PedidosServiceImpl implements PedidosService{
     @Autowired
     DetallePedidoRepository repositoryDetalle;
 
-    // @Autowired
-    // DetallePedidoDAO detallePedidoDAO;
-
-    // @Autowired
-    // ClientesDAO clientesDAO;
-
     @Override
     public Page<Pedido> findAll(Pageable pageable) {
         return repositoryPedido.findAll(pageable);
@@ -47,19 +37,11 @@ public class PedidosServiceImpl implements PedidosService{
             Pedido pedido = findById.get();
 
             pedido.setDetallePedidos(repositoryDetalle.findByPedidoCodigo(pedido.getCodigo()));
-            // List<DetallePedido> detalle = detallePedidoDAO.findDetalle(pedido);
-            // pedido.setDetallePedidos(detalle);
             
             return pedido;
         }
 
         return null;
-
-        // // Cliente cliente = clientesDAO.findById(pedido.getCliente().getCodigo());
-
-        // // pedido.setCliente(cliente);
-
-
     }
 
     @Override
@@ -76,21 +58,11 @@ public class PedidosServiceImpl implements PedidosService{
 
     }
 
-    // @Override
-    // public void update(Pedido pedido) {
-    //     pedidosDAO.update(pedido);
-    // }
-
     @Override
     @Transactional
     public void delete(int codigo) {
-        Pedido pedido = new Pedido();
-        pedido.setCodigo(codigo);
-        //detallePedidoDAO.delete(pedido);
 
         repositoryDetalle.deleteByPedidoCodigo(codigo);
-
         repositoryPedido.deleteById(codigo);        
     }
-    
 }
