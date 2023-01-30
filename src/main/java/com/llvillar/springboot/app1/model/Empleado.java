@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.Transient;
 
 @Entity
 public class Empleado {
@@ -20,6 +21,9 @@ public class Empleado {
     private String dni;
     private String telefono;
     private String direccion;
+
+    @Transient
+    private boolean perteneceDepartamento;
 
     @ManyToMany(mappedBy = "empleados")
     private List<Departamento> departamentos;
@@ -121,12 +125,22 @@ public class Empleado {
         return true;
     }
 
-    // public List<Pedido> getPedidos() {
-    //     return pedidos;
-    // }
+    public boolean isPerteneceDepartamento() {
+        return perteneceDepartamento;
+    }
 
-    // public void setPedidos(List<Pedido> pedidos) {
-    //     this.pedidos = pedidos;
-    // }
+    public void setPerteneceDepartamento(boolean perteneceDepartamento) {
+        this.perteneceDepartamento = perteneceDepartamento;
+    }
+
+    public List<Departamento> getDepartamentos() {
+        return departamentos;
+    }
+
+    public void setDepartamentos(List<Departamento> departamentos) {
+        this.departamentos = departamentos;
+    }
+
+
 
 }
