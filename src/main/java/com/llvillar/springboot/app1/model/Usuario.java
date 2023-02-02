@@ -1,10 +1,34 @@
 package com.llvillar.springboot.app1.model;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+
+@Entity
 public class Usuario {
 
+    @Id
     private String codigo;
     private String name;
     private String password;
+
+    @ManyToMany(cascade = CascadeType.ALL)
+	@JoinTable(
+		name="usuario_permiso"
+		, joinColumns={
+			@JoinColumn(name="usuario_codigo")
+			}
+		, inverseJoinColumns={
+			@JoinColumn(name="permiso_id")
+			}
+		)
+    private List<Permiso> permisos;
+    
     
     public Usuario() {
     }
@@ -51,6 +75,12 @@ public class Usuario {
         } else if (!codigo.equals(other.codigo))
             return false;
         return true;
+    }
+    public List<Permiso> getPermisos() {
+        return permisos;
+    }
+    public void setPermisos(List<Permiso> permisos) {
+        this.permisos = permisos;
     }
 
     

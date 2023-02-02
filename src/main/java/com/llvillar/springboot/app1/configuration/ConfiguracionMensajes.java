@@ -42,4 +42,5 @@ public class ConfiguracionMensajes implements WebMvcConfigurer {
         WebMvcConfigurer.super.addInterceptors(registry);
         registry.addInterceptor(localeChangeInterceptor());
     }
+
 }
