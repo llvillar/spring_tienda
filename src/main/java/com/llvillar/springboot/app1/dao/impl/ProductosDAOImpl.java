@@ -170,7 +170,7 @@ public class ProductosDAOImpl extends JdbcDaoSupport implements ProductosDAO{
             Types.INTEGER
         };
         
-        int update = getJdbcTemplate().update(query, params, types);        
+        getJdbcTemplate().update(query, params, types);        
     }
 
     @Override
@@ -204,6 +204,6 @@ public class ProductosDAOImpl extends JdbcDaoSupport implements ProductosDAO{
             Types.INTEGER
         };
         
-        int update = getJdbcTemplate().update(query, params, types);         
+        getJdbcTemplate().update(query, params, types);         
     }
 }

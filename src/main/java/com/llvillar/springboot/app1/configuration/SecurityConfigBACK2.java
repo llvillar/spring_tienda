@@ -1,41 +1,38 @@
 // package com.llvillar.springboot.app1.configuration;
 
 
+// import org.springframework.beans.factory.annotation.Autowired;
 // import org.springframework.context.annotation.Bean;
 // import org.springframework.context.annotation.Configuration;
 // import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 // import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 // import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 // import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-// import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-// import org.springframework.security.crypto.factory.PasswordEncoderFactories;
-// import org.springframework.security.crypto.password.PasswordEncoder;
 // import org.springframework.security.crypto.password.NoOpPasswordEncoder;
+// import org.springframework.security.crypto.password.PasswordEncoder;
 
+// import com.llvillar.springboot.app1.services.impl.UserService;
 
 // @Configuration
 // @EnableWebSecurity
-// public class SecurityConfigBCK extends WebSecurityConfigurerAdapter {
+// public class SecurityConfigBACK2 extends WebSecurityConfigurerAdapter {
 
-//     // @Bean
-//     // public BCryptPasswordEncoder passwordEncoder(){
-//     //     return new BCryptPasswordEncoder();
-//     // }
+//     @Autowired
+//     UserService userService;
 
+// ///ESto se puede quitar
+//     @Autowired
+//     PasswordEncoder encoder;
+    
 //     @Bean
 //     public PasswordEncoder passwordEncoder() {
-//         return PasswordEncoderFactories.createDelegatingPasswordEncoder();
-//            return NoOpPasswordEncoder.getInstance();
+//         //return PasswordEncoderFactories.createDelegatingPasswordEncoder();
+//         return NoOpPasswordEncoder.getInstance();
 //     }
 
 //     @Override
 //     public void configure(AuthenticationManagerBuilder auth) throws Exception{
-//       auth.inMemoryAuthentication()
-//         .withUser("user")
-//             .password("{noop}5555").roles("USER")
-//             .and()
-//         .withUser("admin")
-//             .password("{noop}1234").roles("USER", "ADMIN");
+//       auth.userDetailsService(userService).passwordEncoder(encoder);
 //     }
 
 //     public void configure(HttpSecurity http) throws Exception{

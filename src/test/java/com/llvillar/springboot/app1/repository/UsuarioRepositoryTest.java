@@ -39,9 +39,8 @@ class UsuarioRepositoryTests {
 
 		repoPer.save(p);
 
-		u.setPermisos(permisos);
 
-		Usuario uOK = repo.save(u);
+		
 		
 
 		Usuario u2 = new Usuario();
@@ -58,6 +57,12 @@ class UsuarioRepositoryTests {
 		u2.setPermisos(permisos2);
 
 		Usuario u2OK = repo.save(u2);
+
+		permisos.add(p2);
+
+		u.setPermisos(permisos);
+
+		Usuario uOK = repo.save(u);
 
 		assertTrue(u.getPassword().equalsIgnoreCase(uOK.getPassword()));
 		assertTrue(u2.getPassword().equalsIgnoreCase(u2OK.getPassword()));

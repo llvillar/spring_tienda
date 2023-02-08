@@ -11,12 +11,12 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" th:href="@{/login/welcome}" href="welcome.html"  th:text="#{menu.inicio}">Inicio</a>
+                        <a class="nav-link active" aria-current="page" th:href="@{/welcome}" href="welcome.html"  th:text="#{menu.inicio}">Inicio</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" th:href="@{/productos/list}" href="productos/list.html"  th:text="#{menu.productos}">Productos</a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item" sec:authorize="hasAuthority('ADMIN')">
                         <a class="nav-link" th:href="@{/clientes/list}" href="clientes/list.html"  th:text="#{menu.clientes}">Clientes</a>
                     </li>
                     <li class="nav-item">
@@ -73,7 +73,7 @@
                         <button class="btn btn-outline-success" type="submit"  th:text="#{menu.buscar}">Buscar</button>
                     </form>
 
-                    <a class="navbar-nav" th:href="@{/login/logout}" href="#"><i class="bi bi-box-arrow-left" th:text="logout"></i></a>
+                    <a class="navbar-nav" th:href="@{/logout}" href="#"><i class="bi bi-box-arrow-left" th:text="logout"></i></a>
 
                 </div>
             </div>

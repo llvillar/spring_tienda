@@ -1,7 +1,5 @@
 package com.llvillar.springboot.app1.dao;
 
-import java.util.List;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

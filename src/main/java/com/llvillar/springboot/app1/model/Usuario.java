@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -17,7 +18,7 @@ public class Usuario {
     private String name;
     private String password;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(fetch =  FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinTable(
 		name="usuario_permiso"
 		, joinColumns={
