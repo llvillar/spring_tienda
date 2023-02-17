@@ -30,26 +30,29 @@ public class ContactosServiceImpl implements ContactosService{
 
     @Override
     public Contacto find(int id) {
-        // TODO Auto-generated method stub
-        return null;
+        Contacto contacto = restTemplate.getForObject(urlAgenda + "contactos/{id}", Contacto.class, id);
+        return contacto;
+    }
+
+
+    @Override
+    public void delete(int id) {
+        restTemplate.delete(urlAgenda + "contactos/{id}", id);
+        
     }
 
     @Override
     public void save(Contacto contacto) {
-        // TODO Auto-generated method stub
+        Contacto contactoResponse = restTemplate.postForObject(urlAgenda + "contactos", contacto, Contacto.class);
+        contacto.setId(contactoResponse.getId());
         
     }
 
     @Override
     public void update(Contacto contacto) {
-        // TODO Auto-generated method stub
+        restTemplate.put(urlAgenda + "contactos/{id}", contacto, contacto.getId());
         
     }
 
-    @Override
-    public void delete(int id) {
-        // TODO Auto-generated method stub
-        
-    }
     
 }
