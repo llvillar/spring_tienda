@@ -30,7 +30,10 @@
                     </li>                                        
                     <li class="nav-item" sec:authorize="hasAnyAuthority('ADMIN','DEPARTAMENTOS')">
                         <a class="nav-link" th:href="@{/departamentos/list}" href="departamentos/list.html" >Departamentos</a>
-                    </li>                                        
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/contactos/list}" href="contactos/list.html" >Contactos</a>
+                    </li>                                                             
                     <!--
                     <li class="nav-item">
                         <a class="nav-link" href="#">Mapa</a>
