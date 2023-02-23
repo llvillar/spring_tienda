@@ -17,7 +17,7 @@
                         <a class="nav-link" th:href="@{/productos/list}" href="productos/list.html"  th:text="#{menu.productos}">Productos</a>
                     </li>
                     <li class="nav-item" sec:authorize="hasAnyAuthority('ADMIN','CLIENTES')">
-                        <a class="nav-link" th:href="@{/clientes/list}" href="clientes/list.html"  th:text="#{menu.clientes}">Clientes</a>
+                        <a class="nav-link" href="#" th:href="@{/clientes/list}" th:text="#{menu.clientes}">Clientes</a>
                     </li>
                     <li class="nav-item" sec:authorize="hasAnyAuthority('ADMIN','PEDIDOS')">
                         <a class="nav-link" th:href="@{/pedidos/list}" href="pedidos/list.html"  th:text="#{menu.pedidos}">Pedidos</a>
@@ -81,6 +81,19 @@
                 </div>
             </div>
         </nav>
+
+        <script>
+            function loadClientes(){
+                alert(1);
+                var url = "/tienda/clientes/list";
+                $("#contenido").load(url);       
+            }
+        </script>
     </div>
+
+
+
+
     </body>
+
 </html>
