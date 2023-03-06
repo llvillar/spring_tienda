@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="commons/header :: header" >
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <link rel="stylesheet" th:href="@{/css/bootstrap.css}" href="../../static/css/bootstrap.css" />
+  <script th:src="@{/js/bootstrap.js}" src="../../static/js/bootstrap.js"></script>
+  <script th:src="@{/js/jquery-3.6.1.min.js}" src="../../static/js/jquery-3.6.1.min.js"></script>
+  <title>clienets@</title>
+</head>
+
+<body>
+  <div th:replace="commons/menu :: menu" />
+
+  <div class="container">
+    <main>
+  
+      <div class="row g-5">
+        
+        <div class="col-8">
+          <h4 class="mb-3">Datos nota</h4>
+          <form class="needs-validation"  method="post" th:action="@{/notas/save}"  novalidate>
+            <div class="row g-4">
+              <div class="col-sm-6">
+                <label for="titulo" class="form-label">Titulo</label>
+                <input type="text" class="form-control" id="titulo" name="titulo" placeholder="" th:value="${nota.titulo}" value="" required>
+                <div class="invalid-feedback">
+                  Titulo requerido.
+                </div>
+              </div>
+  
+              <div class="col-sm-6">
+                <label for="descripcion" class="form-label">Descripcion</label>
+                <input type="text" class="form-control" id="descripcion" name="descripcion" placeholder="" th:value="${nota.descripcion}" value="" required>
+                <div class="invalid-feedback">
+                  Descripcion requerido.
+                </div>
+              </div>
+
+              <div class="col-sm-6">
+                <label for="fecha" class="form-label">Fecha</label>
+                <input type="text" class="form-control" id="fecha" name="fecha" placeholder="" th:value="${nota.fecha}" value="" required>
+                <div class="invalid-feedback">
+                  Fecha requerido.
+                </div>
+              </div>
+
+            </div>
+  
+            <hr class="my-4">
+  
+            <div class="col-sm-12">
+              <div class="btn-group">
+                <a class="btn btn-primary" th:href="@{/notas/list}" href="#" role="button" th:text="#{boton.cancelar}">Cancelar</a>
+                <button class="btn btn-primary" type="submit" th:text="#{boton.crear}">Crear</button>
+              </div>
+            </div>
+
+          </form>
+        </div>
+      </div>
+    </main>
+
+  </div>
+  
+  <div th:replace="commons/footer :: footer" class="container"></div>
+
+</body>
+</html>
