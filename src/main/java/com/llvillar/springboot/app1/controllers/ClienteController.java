@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.llvillar.springboot.app1.model.Cliente;
@@ -35,9 +37,13 @@ public class ClienteController {
     int sizePage;
 
     @GetMapping(value="/list")
-    public ModelAndView list(Model model) {
+    public ModelAndView list(Model model, @RequestParam(required = false) String dni ) {
 
         ModelAndView modelAndView = new ModelAndView();
+
+        modelAndView.addObject("dni", dni);
+
+
         modelAndView.setViewName("redirect:list/1/codigo/asc");
         return modelAndView;
     }
@@ -46,13 +52,21 @@ public class ClienteController {
     public ModelAndView listPage(Model model,
             @PathVariable("numPage") Integer numPage,
             @PathVariable("fieldSort") String fieldSort,
-            @PathVariable("directionSort") String directionSort) {
+            @PathVariable("directionSort") String directionSort,
+            @RequestParam(required = false) String dni) {
 
 
         Pageable pageable = PageRequest.of(numPage - 1, sizePage,
             directionSort.equals("asc") ? Sort.by(fieldSort).ascending() : Sort.by(fieldSort).descending());
 
-        Page<Cliente> page = clientesService.findAll(pageable);
+        Page<Cliente> page = null;
+
+        if(dni == null || dni.isEmpty()){
+            page = clientesService.findAll(pageable);
+        } else {
+            page = clientesService.findByDni(dni, pageable);
+        }
+
 
         List<Cliente> clientes = page.getContent();
 

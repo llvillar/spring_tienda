@@ -8,6 +8,9 @@ import com.llvillar.springboot.app1.model.Cliente;
 
 public interface ClientesService {
     public Page<Cliente> findAll(Pageable page);
+
+    public Page<Cliente> findByDni(String dni, Pageable pageable);
+
     public Cliente find(int codigo);
     public void save(Cliente cliente);
     public void update(Cliente cliente);

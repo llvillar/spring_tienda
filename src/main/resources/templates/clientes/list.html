@@ -11,6 +11,17 @@
       <h3 th:text="#{clientes.titulo}">Clientes</h3>
     </div>
 
+    <form class="row g-3" method="get" th:action="@{/clientes/list}">
+
+      <div class="col-auto">
+        <label for="inputPassword2" class="visually-hidden">Dni</label>
+        <input type="text" class="form-control" id="dni" name="dni" placeholder="12345678Z">
+      </div>
+      <div class="col-auto">
+        <button type="submit" class="btn btn-primary mb-3">buscar</button>
+      </div>
+    </form>
+
     <div class="row">
         <div class="col-lg-3">
             <a th:href="@{/clientes/create}" class="btn btn-primary btn-sm mb-3" th:text="#{cliente.boton.nuevo}">Nuevo cliente</a>

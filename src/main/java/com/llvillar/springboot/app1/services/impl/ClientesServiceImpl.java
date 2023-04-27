@@ -45,5 +45,10 @@ public class ClientesServiceImpl implements ClientesService{
     public void delete(int codigo) {
         repository.deleteById(codigo);        
     }
+
+    @Override
+    public Page<Cliente> findByDni(String dni, Pageable page) {
+        return repository.findByDniContaining(dni, page);
+    }
     
 }
