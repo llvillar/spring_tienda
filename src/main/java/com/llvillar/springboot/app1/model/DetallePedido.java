@@ -1,22 +1,30 @@
 package com.llvillar.springboot.app1.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
 
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
 @Entity
 public class DetallePedido {
 
-    @EmbeddedId
-    private DetallePedidoId id = new DetallePedidoId();
+    // @EmbeddedId
+    // private DetallePedidoId id = new DetallePedidoId();
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = true)
+    @Id
+    @GeneratedValue
+    private int codigo;
+
+    @ManyToOne(fetch = FetchType.EAGER, optional = true, cascade = CascadeType.MERGE)
     @MapsId("producto_codigo")
     private Producto producto;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = true)
+    @ManyToOne(fetch = FetchType.EAGER, optional = true, cascade = CascadeType.MERGE)
     @MapsId("pedido_codigo")
     private Pedido pedido;
 
@@ -63,14 +71,21 @@ public class DetallePedido {
     }
 
 
-    public DetallePedidoId getId() {
-        return id;
+    // public DetallePedidoId getId() {
+    //     return id;
+    // }
+
+
+    // public void setId(DetallePedidoId id) {
+    //     this.id = id;
+    // }
+
+    public int getCodigo() {
+        return codigo;
     }
 
-
-    public void setId(DetallePedidoId id) {
-        this.id = id;
+    public void setCodigo(int codigo) {
+        this.codigo = codigo;
     }
-
 
 }

@@ -10,8 +10,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.llvillar.springboot.app1.model.DetallePedido;
-import com.llvillar.springboot.app1.model.DetallePedidoId;
+// import com.llvillar.springboot.app1.model.DetallePedidoId;
 import com.llvillar.springboot.app1.model.Pedido;
+import com.llvillar.springboot.app1.model.Producto;
 import com.llvillar.springboot.app1.repository.DetallePedidoRepository;
 import com.llvillar.springboot.app1.repository.PedidoRepository;
 import com.llvillar.springboot.app1.services.PedidosService;
@@ -51,8 +52,10 @@ public class PedidosServiceImpl implements PedidosService{
 
         List<DetallePedido> detallePedidos = pedido.getDetallePedidos();
         for (DetallePedido detallePedido : detallePedidos) {
-            DetallePedidoId id = new DetallePedidoId(pedido.getCodigo(), detallePedido.getProducto().getCodigo());
-            detallePedido.setId(id);
+            // DetallePedidoId id = new DetallePedidoId(0, pedido.getCodigo(), detallePedido.getProducto().getCodigo());
+            // detallePedido.setId(id);
+            detallePedido.setPedido(pedido);
+            detallePedido.setProducto(detallePedido.getProducto());
             repositoryDetalle.save(detallePedido);
         }
 
