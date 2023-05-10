@@ -54,8 +54,8 @@ public class PedidosServiceImpl implements PedidosService{
         for (DetallePedido detallePedido : detallePedidos) {
             // DetallePedidoId id = new DetallePedidoId(0, pedido.getCodigo(), detallePedido.getProducto().getCodigo());
             // detallePedido.setId(id);
-            detallePedido.setPedido(pedido);
-            detallePedido.setProducto(detallePedido.getProducto());
+            // detallePedido.setPedido(pedido);
+            // detallePedido.setProducto(detallePedido.getProducto());
             repositoryDetalle.save(detallePedido);
         }
 

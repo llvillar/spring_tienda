@@ -1,10 +1,15 @@
 package com.llvillar.springboot.app1.model;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
+import javax.persistence.OneToMany;
 
 import com.llvillar.springboot.app1.utils.ImageUtil;
 
@@ -12,7 +17,7 @@ import com.llvillar.springboot.app1.utils.ImageUtil;
 public class Producto {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int codigo;
     
     private String nombre;
@@ -22,6 +27,11 @@ public class Producto {
     @Lob
     @Column(length = 100000)
     private byte[] image;
+
+    @OneToMany(mappedBy = "producto")
+    private List<DetallePedido> detallePedidos;
+    
+
 
     
     public Producto() {
@@ -120,6 +130,14 @@ public class Producto {
         if (codigo != other.codigo)
             return false;
         return true;
+    }
+
+    public List<DetallePedido> getDetallePedidos() {
+        return detallePedidos;
+    }
+
+    public void setDetallePedidos(List<DetallePedido> detallePedidos) {
+        this.detallePedidos = detallePedidos;
     }
 
 }

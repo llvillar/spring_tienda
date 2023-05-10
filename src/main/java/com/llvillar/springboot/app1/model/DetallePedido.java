@@ -8,7 +8,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
 
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 
 @Entity
 public class DetallePedido {
@@ -17,15 +19,15 @@ public class DetallePedido {
     // private DetallePedidoId id = new DetallePedidoId();
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int codigo;
 
-    @ManyToOne(fetch = FetchType.EAGER, optional = true, cascade = CascadeType.MERGE)
-    @MapsId("producto_codigo")
+    @ManyToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name = "producto_codigo")
     private Producto producto;
 
-    @ManyToOne(fetch = FetchType.EAGER, optional = true, cascade = CascadeType.MERGE)
-    @MapsId("pedido_codigo")
+    @ManyToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name = "pedido_codigo")
     private Pedido pedido;
 
     private int cantidad;
