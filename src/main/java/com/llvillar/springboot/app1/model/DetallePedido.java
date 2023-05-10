@@ -29,6 +29,7 @@ public class DetallePedido {
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "pedido_codigo")
     private Pedido pedido;
+    
 
     private int cantidad;
     private float subtotal;
